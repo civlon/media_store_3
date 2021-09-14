@@ -25,11 +25,11 @@ public class Main {
 		Session session = factory.openSession();
 		
 		Transaction tx = session.beginTransaction();
-		List products = session.createQuery("FROM \"Produkt\"").list();
+		List products = session.createQuery("FROM Product").list();
         for (Iterator iterator = products.iterator(); iterator.hasNext();){
            Product product = (Product) iterator.next(); 
-           System.out.print("Produktnummer: " + product.getProductNumber()); 
-           System.out.print("Titel: " + product.getTitle()); 
+           System.out.println("Produktnummer: " + product.getProductNumber()); 
+           System.out.println("Titel: " + product.getTitle()); 
            System.out.println("Produktgruppe: " + product.getProductGroup());
            break;
         }

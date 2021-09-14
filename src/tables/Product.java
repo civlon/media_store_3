@@ -6,29 +6,35 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 
 
 @Entity
-@Table(name = "\"Produkt\"")
+@Table(name = "product", schema = "public")
 public class Product {
-	
+
 	@Id
-	@Column(name = "ProduktNummer")
+	@Column(name = "product_number")
+	@NotNull
 	private String productNumber;
 
-	@Column(name = "Titel")
+	@Column(name = "title")
+	@NotNull
 	private String title;
 	
-	@Column(name = "Rating")
+	@Column(name = "rating")
 	private BigDecimal rating;
 	
-	@Column(name = "Verkaufsrang")
+	@Column(name = "sales_rank", unique = true)
+	@NotNull
 	private int salesRank;
 	
-	@Column(name = "Bildpfad")
+	@Column(name = "image_path")
 	private String imagePath;
 	
-	@Column(name = "Produktgruppe")
+	@Column(name = "product_group")
+	@NotNull
 	private String productGroup;
 	
 	public Product() {}

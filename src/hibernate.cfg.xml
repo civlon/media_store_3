@@ -13,20 +13,18 @@
         <property name="hibernate.connection.password">1234</property>
  
         <!-- SQL dialect -->
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
  
         <!-- Print executed SQL to stdout -->
         <property name="show_sql">true</property>
  
         <!-- Update database on startup -->
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
         
-        <property name="hibernate.implicit_naming_strategy">org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl</property>
-        <property name="hibernate.physical_naming_strategy">org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</property>
-        <property name="hibernate.globally_quoted_identifiers">true</property>
- 
+         
         <!-- Annotated entity classes -->
         <mapping class="tables.Product"/>
+
         
     </session-factory>
 </hibernate-configuration>
