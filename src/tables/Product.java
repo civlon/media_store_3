@@ -9,7 +9,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 
-
 @Entity
 @Table(name = "product", schema = "public")
 public class Product {

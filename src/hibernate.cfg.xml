@@ -10,7 +10,7 @@
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/MediaStore</property>
         <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">1234</property>
+        <property name="hibernate.connection.password">tanzen12</property>
  
         <!-- SQL dialect -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
@@ -24,6 +24,21 @@
          
         <!-- Annotated entity classes -->
         <mapping class="tables.Product"/>
+        <mapping class="tables.Book"/>
+        <mapping class="tables.Music"/>
+        <mapping class="tables.Dvd"/>
+        <mapping class="tables.Author"/>
+        <mapping class="tables.Artist"/>
+        <mapping class="tables.MusicTitle"/>
+        <mapping class="tables.InvolvedPersons"/>
+        <mapping class="tables.Category"/>
+        <mapping class="tables.ProductCategory"/>
+        <mapping class="tables.SimilarProducts"/>
+        <mapping class="tables.Branch"/>
+        <mapping class="tables.Offer"/>
+        <mapping class="tables.Customer"/>
+        <mapping class="tables.Purchase"/>
+        <mapping class="tables.Review"/>
 
         
     </session-factory>
