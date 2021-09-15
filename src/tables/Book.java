@@ -17,16 +17,16 @@ public class Book {
 	@NotNull
 	private String productNumber;
 	
-	@Column(name = "page_numbers", nullable = true)
-	private Short pageNumbers;
+	@Column(name = "number_of_pages", nullable = true)
+	private Short numberOfPages;
 	
 	@Column(name = "release_date")
 	@NotNull
 	private Date releaseDate;
 	
-	@Column(name = "isbn_number")
+	@Column(name = "isbn")
 	@NotNull
-	private String isbnNumber;
+	private String isbn;
 	
 	@Column(name = "publisher")
 	@NotNull
@@ -34,13 +34,13 @@ public class Book {
 	
 	public Book() {}
 
-	public Book(@NotNull String productNumber, Short pageNumbers, @NotNull Date releaseDate, @NotNull String isbnNumber,
+	public Book(@NotNull String productNumber, Short numberOfPages, @NotNull Date releaseDate, @NotNull String isbn,
 			@NotNull String publisher) {
 		super();
 		this.productNumber = productNumber;
-		this.pageNumbers = pageNumbers;
+		this.numberOfPages = numberOfPages;
 		this.releaseDate = releaseDate;
-		this.isbnNumber = isbnNumber;
+		this.isbn = isbn;
 		this.publisher = publisher;
 	}
 
@@ -52,12 +52,12 @@ public class Book {
 		this.productNumber = productNumber;
 	}
 
-	public Short getPageNumbers() {
-		return pageNumbers;
+	public Short getNumberOfPages() {
+		return numberOfPages;
 	}
 
-	public void setPageNumbers(Short pageNumbers) {
-		this.pageNumbers = pageNumbers;
+	public void setNumberOfPages(Short pageNumbers) {
+		this.numberOfPages = pageNumbers;
 	}
 
 	public Date getReleaseDate() {
@@ -68,12 +68,12 @@ public class Book {
 		this.releaseDate = releaseDate;
 	}
 
-	public String getIsbnNumber() {
-		return isbnNumber;
+	public String getIsbn() {
+		return isbn;
 	}
 
-	public void setIsbnNumber(String isbnNumber) {
-		this.isbnNumber = isbnNumber;
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 
 	public String getPublisher() {

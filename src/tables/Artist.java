@@ -18,16 +18,17 @@ public class Artist {
 	@NotNull
 	private String productNumber;
 	
-	@Column(name = "stage_name")
+	@Id
+	@Column(name = "artist_name")
 	@NotNull
-	private String stageName;
+	private String artistName;
 	
 	public Artist() {}
 
-	public Artist(@NotNull String productNumber, @NotNull String stageName) {
+	public Artist(@NotNull String productNumber, @NotNull String artistName) {
 		super();
 		this.productNumber = productNumber;
-		this.stageName = stageName;
+		this.artistName = artistName;
 	}
 
 	public String getProductNumber() {
@@ -38,12 +39,12 @@ public class Artist {
 		this.productNumber = productNumber;
 	}
 
-	public String getStageName() {
-		return stageName;
+	public String getArtistName() {
+		return artistName;
 	}
 
-	public void setStageName(String stageName) {
-		this.stageName = stageName;
+	public void setArtistName(String artistName) {
+		this.artistName = artistName;
 	}
 	
 	

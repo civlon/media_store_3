@@ -2,17 +2,15 @@ package primaryKeys;
 
 import java.io.Serializable;
 
-public class ArtistId implements Serializable{
+public class ArtistId implements Serializable {
 	private String productNumber;
-	private String stageName;
+	private String artistName;
 	
 	public ArtistId() {}
 
-	public ArtistId(String productNumber, String stageName) {
+	public ArtistId(String productNumber, String artistName) {
 		super();
 		this.productNumber = productNumber;
-		this.stageName = stageName;
-	}
-	
-	
+		this.artistName = artistName;
+	}	
 }

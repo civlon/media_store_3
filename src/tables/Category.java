@@ -22,16 +22,16 @@ public class Category {
 	@NotNull
 	private String name;
 	
-	@Column(name = "over_category", nullable = true)
-	private Integer overCategory;
+	@Column(name = "super_category", nullable = true)
+	private Integer superCategory;
 	
 	public Category() {}
 
-	public Category(@NotNull int categoryId, @NotNull String name, Integer overCategory) {
+	public Category(@NotNull int categoryId, @NotNull String name, Integer superCategory) {
 		super();
 		this.categoryId = categoryId;
 		this.name = name;
-		this.overCategory = overCategory;
+		this.superCategory = superCategory;
 	}
 
 	public int getCategoryId() {
@@ -50,12 +50,12 @@ public class Category {
 		this.name = name;
 	}
 
-	public Integer getOverCategory() {
-		return overCategory;
+	public Integer getSuperCategory() {
+		return superCategory;
 	}
 
-	public void setOverCategory(Integer overCategory) {
-		this.overCategory = overCategory;
+	public void setSuperCategory(Integer superCategory) {
+		this.superCategory = superCategory;
 	}
 	
 	

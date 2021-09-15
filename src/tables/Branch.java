@@ -15,13 +15,13 @@ public class Branch {
 	@NotNull
 	private String branchName;
 	
-	@Column(name = "location")
+	@Column(name = "city")
 	@NotNull
-	private String location;
+	private String city;
 	
-	@Column(name = "plz")
+	@Column(name = "zip_code")
 	@NotNull
-	private String plz;
+	private String zipCode;
 	
 	@Column(name = "street")
 	@NotNull
@@ -29,11 +29,11 @@ public class Branch {
 	
 	public Branch() {}
 
-	public Branch(@NotNull String branchName, @NotNull String location, @NotNull String plz, @NotNull String street) {
+	public Branch(@NotNull String branchName, @NotNull String city, @NotNull String zipCode, @NotNull String street) {
 		super();
 		this.branchName = branchName;
-		this.location = location;
-		this.plz = plz;
+		this.city = city;
+		this.zipCode = zipCode;
 		this.street = street;
 	}
 
@@ -45,20 +45,20 @@ public class Branch {
 		this.branchName = branchName;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getCity() {
+		return city;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public String getPlz() {
-		return plz;
+	public String getZipCode() {
+		return zipCode;
 	}
 
-	public void setPlz(String plz) {
-		this.plz = plz;
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
 	}
 
 	public String getStreet() {

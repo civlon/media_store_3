@@ -45,21 +45,21 @@ public class Purchase {
 	@NotNull
 	private Date timeStamp;
 
-	@Column(name = "number")
+	@Column(name = "amount")
 	@NotNull
-	private Short number;
+	private Short amount;
 	
 	public Purchase() {}
 
 	public Purchase(@NotNull String username, @NotNull String branchName, @NotNull String productNumber,
-			@NotNull String condition, @NotNull Date timeStamp, @NotNull Short number) {
+			@NotNull String condition, @NotNull Date timeStamp, @NotNull Short amount) {
 		super();
 		this.username = username;
 		this.branchName = branchName;
 		this.productNumber = productNumber;
 		this.condition = condition;
 		this.timeStamp = timeStamp;
-		this.number = number;
+		this.amount = amount;
 	}
 
 	public String getUsername() {
@@ -102,12 +102,12 @@ public class Purchase {
 		this.timeStamp = timeStamp;
 	}
 
-	public Short getNumber() {
-		return number;
+	public Short getAmount() {
+		return amount;
 	}
 
-	public void setNumber(Short number) {
-		this.number = number;
+	public void setAmount(Short amount) {
+		this.amount = amount;
 	}
 	
 	

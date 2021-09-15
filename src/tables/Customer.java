@@ -15,11 +15,11 @@ public class Customer {
 	@NotNull
 	private String username;
 	
-	@Column(name = "location")
-	private String location;
+	@Column(name = "city")
+	private String city;
 
-	@Column(name = "plz")
-	private String plz;
+	@Column(name = "zip_code")
+	private String zipCode;
 
 	@Column(name = "street")
 	private String street;
@@ -29,11 +29,11 @@ public class Customer {
 
 	public Customer() {}
 
-	public Customer(@NotNull String username, String location, String plz, String street, String accountNumber) {
+	public Customer(@NotNull String username, String city, String zipCode, String street, String accountNumber) {
 		super();
 		this.username = username;
-		this.location = location;
-		this.plz = plz;
+		this.city = city;
+		this.zipCode = zipCode;
 		this.street = street;
 		this.accountNumber = accountNumber;
 	}
@@ -46,20 +46,20 @@ public class Customer {
 		this.username = username;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getCity() {
+		return city;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public String getPlz() {
-		return plz;
+	public String getZipCode() {
+		return zipCode;
 	}
 
-	public void setPlz(String plz) {
-		this.plz = plz;
+	public void setZipCode(String plz) {
+		this.zipCode = plz;
 	}
 
 	public String getStreet() {
