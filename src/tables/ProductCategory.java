@@ -9,7 +9,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import primaryKeys.ProductCategoryId;
+import tables.primaryKeys.ProductCategoryId;
 
 @Entity
 @IdClass(ProductCategoryId.class)

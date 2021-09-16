@@ -8,7 +8,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import primaryKeys.OfferId;
+import tables.primaryKeys.OfferId;
 
 @Entity
 @IdClass(OfferId.class)

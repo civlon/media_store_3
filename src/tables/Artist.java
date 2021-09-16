@@ -7,7 +7,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import primaryKeys.ArtistId;
+import tables.primaryKeys.ArtistId;
 
 @Entity
 @IdClass(ArtistId.class)

@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import primaryKeys.PurchaseId;
+import tables.primaryKeys.PurchaseId;
 
 @Entity
 @IdClass(PurchaseId.class)

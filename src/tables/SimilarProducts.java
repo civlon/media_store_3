@@ -7,7 +7,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import primaryKeys.SimilarProductsId;
+import tables.primaryKeys.SimilarProductsId;
 
 @Entity
 @IdClass(SimilarProductsId.class)

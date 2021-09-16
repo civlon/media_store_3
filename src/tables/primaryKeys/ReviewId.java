@@ -1,4 +1,4 @@
-package primaryKeys;
+package tables.primaryKeys;
 
 import java.io.Serializable;
 

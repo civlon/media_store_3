@@ -9,8 +9,7 @@ import javax.persistence.IdClass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
-import primaryKeys.ReviewId;
+import tables.primaryKeys.ReviewId;
 
 @Entity
 @IdClass(ReviewId.class)
