@@ -5,12 +5,15 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 
 @Entity
 @Table(name = "product", schema = "public")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Product {
 
 	@Id

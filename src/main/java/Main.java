@@ -46,6 +46,8 @@ public class Main {
 		for (Iterator iterator = products2.iterator(); iterator.hasNext();) {
 			Book book = (Book) iterator.next();
 			System.out.println("Produktnummer: " + book.getProductNumber());
+			System.out.println("Titel: " + book.getTitle());
+			System.out.println("Produktgruppe: " + book.getProductGroup());
 			System.out.println("Seitenzahl: " + book.getNumberOfPages());
 			System.out.println("Erscheinungsdatum: " + book.getReleaseDate());
 			System.out.println("ISBN-Nummer: " + book.getIsbn());
@@ -57,6 +59,8 @@ public class Main {
 		for (Iterator iterator = products3.iterator(); iterator.hasNext();) {
 			Music music = (Music) iterator.next();
 			System.out.println("Produktnummer: " + music.getProductNumber());
+			System.out.println("Titel: " + music.getTitle());
+			System.out.println("Produktgruppe: " + music.getProductGroup());
 			System.out.println("Label: " + music.getLabel());
 			System.out.println("Erscheinungsdatum: " + music.getReleaseDate());
 			break;
@@ -66,6 +70,8 @@ public class Main {
 		for (Iterator iterator = products4.iterator(); iterator.hasNext();) {
 			Dvd dvd = (Dvd) iterator.next();
 			System.out.println("Produktnummer: " + dvd.getProductNumber());
+			System.out.println("Titel: " + dvd.getTitle());
+			System.out.println("Produktgruppe: " + dvd.getProductGroup());
 			System.out.println("Format: " + dvd.getFormat());
 			System.out.println("Laufzeit: " + dvd.getRuntime());
 			System.out.println("Regioncode: " + dvd.getRegionCode());

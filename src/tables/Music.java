@@ -10,7 +10,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "music_cd", schema = "public")
-public class Music {
+public class Music extends Product {
 	@Id
 	@Column(name = "product_number")
 	@NotNull

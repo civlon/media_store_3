@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "book", schema = "public")
-public class Book {
+public class Book extends Product {
 	
 	@Id
 	@Column(name = "product_number")

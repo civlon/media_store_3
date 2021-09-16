@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "dvd", schema = "public")
-public class Dvd {
+public class Dvd extends Product {
 
 	@Id
 	@Column(name = "product_number")
