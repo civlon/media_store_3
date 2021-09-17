@@ -59,6 +59,9 @@ public class Product {
 	@OneToMany(mappedBy = "product")
 	private List<Offer> offers = new ArrayList<Offer>();
 	
+	@OneToMany(mappedBy = "product")
+	private List<Purchase> purchases = new ArrayList<Purchase>();
+	
 	public Product() {}
 	
 	public Product(String productNumber, String title, BigDecimal rating, int salesRank, String imagePath,

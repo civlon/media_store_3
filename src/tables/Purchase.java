@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,6 +50,18 @@ public class Purchase {
 	@Column(name = "amount")
 	@NotNull
 	private Short amount;
+	
+	@ManyToOne
+	@JoinColumn(name = "username", insertable = false, updatable = false)
+	private Customer customer;
+	
+	@ManyToOne
+	@JoinColumn(name = "branch_name", insertable = false, updatable = false)
+	private Branch branch;
+	
+	@ManyToOne
+	@JoinColumn(name = "product_number", insertable = false, updatable = false)
+	private Product product;
 	
 	public Purchase() {}
 
@@ -108,6 +122,30 @@ public class Purchase {
 
 	public void setAmount(Short amount) {
 		this.amount = amount;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 	

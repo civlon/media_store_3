@@ -34,6 +34,9 @@ public class Branch {
 	@OneToMany(mappedBy = "branch")
 	private List<Offer> offers = new ArrayList<Offer>();
 	
+	@OneToMany(mappedBy = "branch")
+	private List<Purchase> purchases = new ArrayList<Purchase>();
+	
 	public Branch() {}
 
 	public Branch(@NotNull String branchName, @NotNull String city, @NotNull String zipCode, @NotNull String street) {
