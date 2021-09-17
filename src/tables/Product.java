@@ -62,6 +62,9 @@ public class Product {
 	@OneToMany(mappedBy = "product")
 	private List<Purchase> purchases = new ArrayList<Purchase>();
 	
+	@OneToMany(mappedBy = "product")
+	private List<Review> reviews = new ArrayList<Review>();
+	
 	public Product() {}
 	
 	public Product(String productNumber, String title, BigDecimal rating, int salesRank, String imagePath,
@@ -143,6 +146,22 @@ public class Product {
 
 	public void setOffers(List<Offer> offers) {
 		this.offers = offers;
+	}
+
+	public List<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
 	}
 	
 }

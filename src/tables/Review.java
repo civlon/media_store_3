@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -40,6 +42,14 @@ public class Review {
 	@Column(name = "review_date")
 	@NotNull
 	private Date reviewDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "username", insertable = false, updatable = false)
+	private Customer customer;
+	
+	@ManyToOne
+	@JoinColumn(name = "product_number", insertable = false, updatable = false)
+	private Product product;
 	
 	public Review() {}
 
@@ -100,6 +110,22 @@ public class Review {
 
 	public void setReviewDate(Date reviewDate) {
 		this.reviewDate = reviewDate;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 	

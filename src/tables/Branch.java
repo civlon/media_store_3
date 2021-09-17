@@ -86,6 +86,14 @@ public class Branch {
 	public void setOffers(List<Offer> offers) {
 		this.offers = offers;
 	}
+
+	public List<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
 	
 	
 

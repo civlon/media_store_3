@@ -33,6 +33,9 @@ public class Customer {
 	
 	@OneToMany(mappedBy = "customer")
 	private List<Purchase> purchases = new ArrayList<Purchase>();
+	
+	@OneToMany(mappedBy = "customer")
+	private List<Review> reviews = new ArrayList<Review>();
 
 	public Customer() {}
 
@@ -83,6 +86,22 @@ public class Customer {
 
 	public void setAccountNumber(String accountNumber) {
 		this.accountNumber = accountNumber;
+	}
+
+	public List<Purchase> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<Purchase> purchases) {
+		this.purchases = purchases;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
 	}
 	
 	
