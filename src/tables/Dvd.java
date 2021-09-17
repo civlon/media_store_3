@@ -1,8 +1,12 @@
 package tables;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -26,6 +30,9 @@ public class Dvd extends Product {
 	@Column(name = "region_code")
 	@NotNull
 	private Short regionCode;
+	
+	@OneToMany(mappedBy = "dvd")
+	private List<InvolvedPersons> involvedPersons = new ArrayList<InvolvedPersons>();
 	
 	public Dvd() {}
 	
@@ -68,6 +75,14 @@ public class Dvd extends Product {
 
 	public void setRegionCode(Short regionCode) {
 		this.regionCode = regionCode;
+	}
+
+	public List<InvolvedPersons> getInvolvedPersons() {
+		return involvedPersons;
+	}
+
+	public void setInvolvedPersons(List<InvolvedPersons> involvedPersons) {
+		this.involvedPersons = involvedPersons;
 	}
 	
 	

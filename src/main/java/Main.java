@@ -39,6 +39,7 @@ public class Main {
 			System.out.println("Produktnummer: " + product.getProductNumber());
 			System.out.println("Titel: " + product.getTitle());
 			System.out.println("Produktgruppe: " + product.getProductGroup());
+			System.out.println();
 			break;
 		}
 
@@ -52,6 +53,11 @@ public class Main {
 			System.out.println("Erscheinungsdatum: " + book.getReleaseDate());
 			System.out.println("ISBN-Nummer: " + book.getIsbn());
 			System.out.println("Verlag: " + book.getPublisher());
+			System.out.println("Autoren: ");
+			for (Author author : book.getAuthors()) {
+				System.out.println("Name: " + author.getName());
+			}
+			System.out.println();
 			break;
 		}
 
@@ -65,23 +71,35 @@ public class Main {
 			System.out.println("Erscheinungsdatum: " + music.getReleaseDate());
 			System.out.println("Künstler: ");
 			for (Artist artist : music.getArtists()) {
-				System.out.println(artist.getArtistName());
+				System.out.println("Name: " + artist.getArtistName());
 			}
+			System.out.println("Songs: ");
+			for (MusicTitle track : music.getTracks()) {
+				System.out.println("Name: " + track.getMusicTitle());
+				break;
+			}
+			System.out.println();
 			break;
 		}
 
-//		List products4 = session.createQuery("FROM Dvd").list();
-//		for (Iterator iterator = products4.iterator(); iterator.hasNext();) {
-//			Dvd dvd = (Dvd) iterator.next();
-//			System.out.println("Produktnummer: " + dvd.getProductNumber());
-//			System.out.println("Titel: " + dvd.getTitle());
-//			System.out.println("Produktgruppe: " + dvd.getProductGroup());
-//			System.out.println("Format: " + dvd.getFormat());
-//			System.out.println("Laufzeit: " + dvd.getRuntime());
-//			System.out.println("Regioncode: " + dvd.getRegionCode());
-//			break;
-//		}
-//
+		List products4 = session.createQuery("FROM Dvd").list();
+		for (Iterator iterator = products4.iterator(); iterator.hasNext();) {
+			Dvd dvd = (Dvd) iterator.next();
+			System.out.println("Produktnummer: " + dvd.getProductNumber());
+			System.out.println("Titel: " + dvd.getTitle());
+			System.out.println("Produktgruppe: " + dvd.getProductGroup());
+			System.out.println("Format: " + dvd.getFormat());
+			System.out.println("Laufzeit: " + dvd.getRuntime());
+			System.out.println("Regioncode: " + dvd.getRegionCode());
+			System.out.println("Beteiligte Personen: ");
+			for (InvolvedPersons involvedPerson : dvd.getInvolvedPersons()) {
+				System.out.println("Name: " + involvedPerson.getName());
+				System.out.println("Rolle: " + involvedPerson.getRole());
+			}
+			System.out.println();
+			break;
+		}
+
 //		List products5 = session.createQuery("FROM Author").list();
 //		for (Iterator iterator = products5.iterator(); iterator.hasNext();) {
 //			Author author = (Author) iterator.next();

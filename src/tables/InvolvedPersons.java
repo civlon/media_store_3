@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -27,6 +29,10 @@ public class InvolvedPersons {
 	@Column(name = "role")
 	@NotNull
 	private String role;
+	
+	@ManyToOne
+	@JoinColumn(name = "product_number", insertable = false, updatable = false)
+	private Dvd dvd;
 	
 	public InvolvedPersons() {}
 
@@ -59,6 +65,14 @@ public class InvolvedPersons {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public Dvd getDvd() {
+		return dvd;
+	}
+
+	public void setDvd(Dvd dvd) {
+		this.dvd = dvd;
 	}
 	
 	

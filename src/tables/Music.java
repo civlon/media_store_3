@@ -29,6 +29,9 @@ public class Music extends Product {
 	
 	@OneToMany(mappedBy = "music")
 	private List<Artist> artists = new ArrayList<Artist>();
+	
+	@OneToMany(mappedBy = "music")
+	private List<MusicTitle> tracks = new ArrayList<MusicTitle>();
 
 	public Music(@NotNull String productNumber, @NotNull String label, @NotNull Date releaseDate) {
 		super();
@@ -69,5 +72,13 @@ public class Music extends Product {
 
 	public void setArtists(List<Artist> artists) {
 		this.artists = artists;
+	}
+
+	public List<MusicTitle> getTracks() {
+		return tracks;
+	}
+
+	public void setTracks(List<MusicTitle> tracks) {
+		this.tracks = tracks;
 	}
 }
