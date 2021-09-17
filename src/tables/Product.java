@@ -1,12 +1,17 @@
 package tables;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -38,6 +43,15 @@ public class Product {
 	@Column(name = "product_group")
 	@NotNull
 	private String productGroup;
+	
+	@ManyToMany
+	@JoinTable(name = "similar_products",
+	joinColumns = { @JoinColumn(name = "product_number1") },
+	inverseJoinColumns = { @JoinColumn(name = "product_number2") })
+	private Set<Product> similarProducts1 = new HashSet<Product>();
+	
+	@ManyToMany(mappedBy = "similarProducts1")
+	private Set<Product> similarProducts2 = new HashSet<Product>();
 	
 	public Product() {}
 	
@@ -97,6 +111,21 @@ public class Product {
 	
 	public void setProductGroup(String productGroup) {
 		this.productGroup = productGroup;
+	}
+
+	public void setSimilarProducts1(Set<Product> similarProducts1) {
+		this.similarProducts1 = similarProducts1;
+	}
+
+	public void setSimilarProducts2(Set<Product> similarProducts2) {
+		this.similarProducts2 = similarProducts2;
+	}
+	
+	public Set<Product> getSimilarProducts() {
+		Set<Product> similarProducts = new HashSet<Product>();
+		similarProducts.addAll(this.similarProducts1);
+		similarProducts.addAll(this.similarProducts2);		
+		return similarProducts;
 	}
 	
 }

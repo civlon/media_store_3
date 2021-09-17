@@ -45,8 +45,6 @@ public class SimilarProducts {
 
 	public void setProductNumber2(String productNumber2) {
 		this.productNumber2 = productNumber2;
-	}
-	
-	
+	}	
 
 }

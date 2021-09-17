@@ -33,12 +33,16 @@ public class Main {
 		Session session = factory.openSession();
 
 		Transaction tx = session.beginTransaction();
-		List products = session.createQuery("FROM Product").list();
+		List products = session.createQuery("FROM Product WHERE productNumber = '3522177592'").list();
 		for (Iterator iterator = products.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
 			System.out.println("Produktnummer: " + product.getProductNumber());
 			System.out.println("Titel: " + product.getTitle());
 			System.out.println("Produktgruppe: " + product.getProductGroup());
+			System.out.println("Ähnliche Produkte: ");
+			for (Product similarProduct : product.getSimilarProducts()) {
+				System.out.println(similarProduct.getProductNumber());
+			}
 			System.out.println();
 			break;
 		}
