@@ -1,7 +1,9 @@
 package tables;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -52,6 +55,9 @@ public class Product {
 	
 	@ManyToMany(mappedBy = "similarProducts1")
 	private Set<Product> similarProducts2 = new HashSet<Product>();
+	
+	@OneToMany(mappedBy = "product")
+	private List<Offer> offers = new ArrayList<Offer>();
 	
 	public Product() {}
 	
@@ -126,6 +132,14 @@ public class Product {
 		similarProducts.addAll(this.similarProducts1);
 		similarProducts.addAll(this.similarProducts2);		
 		return similarProducts;
+	}
+
+	public List<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
 	}
 	
 }

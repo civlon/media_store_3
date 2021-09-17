@@ -43,6 +43,10 @@ public class Main {
 			for (Product similarProduct : product.getSimilarProducts()) {
 				System.out.println(similarProduct.getProductNumber());
 			}
+			System.out.println("Angebote: ");
+			for (Offer offer : product.getOffers()) {
+				System.out.println(offer.getBranchName());
+			}
 			System.out.println();
 			break;
 		}

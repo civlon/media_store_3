@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -35,6 +37,14 @@ public class Offer {
 	
 	@Column(name = "price", nullable = true)
 	private Double price;
+	
+	@ManyToOne
+	@JoinColumn(name = "branch_name", insertable = false, updatable = false)
+	private Branch branch;
+	
+	@ManyToOne
+	@JoinColumn(name = "product_number", insertable = false, updatable = false)
+	private Product product;
 	
 	public Offer() {}
 
@@ -86,6 +96,22 @@ public class Offer {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public Branch getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Branch branch) {
+		this.branch = branch;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 	
