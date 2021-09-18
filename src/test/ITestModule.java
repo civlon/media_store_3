@@ -5,7 +5,7 @@ public interface ITestModule {
 	
 	void finish();
 	
-	void getProduct(String id);
+	void getProduct();
 	
 	void getProducts(String pattern);
 	
