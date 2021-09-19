@@ -1,6 +1,8 @@
 package test;
 
 import java.util.Iterator;
+import java.util.Date;
+import java.time.LocalDateTime;    
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +13,7 @@ import org.hibernate.cfg.Configuration;
 
 import tables.Offer;
 import tables.Product;
+import tables.Review;
 
 public class TestModule implements ITestModule {
 	
@@ -115,7 +118,10 @@ public class TestModule implements ITestModule {
 
 	@Override
 	public void getTopProducts() {
-		int k = 5;
+		Scanner input = new Scanner(System.in);
+		System.out.println("Wie viele Produkte sollen angezeigt werden?: ");
+		int k = input.nextInt();
+
 		
 		Transaction tx = this.session.beginTransaction();
 		
@@ -148,13 +154,65 @@ public class TestModule implements ITestModule {
 
 	@Override
 	public void getSimilarCheaperProduct() {
-		// TODO Auto-generated method stub
+//		Scanner input = new Scanner(System.in);
+//		System.out.println("Bitte Produkt-ID eingeben: ");
+//		String productId = input.nextLine();
+//
+//		Transaction tx = this.session.beginTransaction();
+//		
+//		List products = this.session.createQuery("FROM SimilarProducts sp INNER JOIN Product p WHERE (sp.productNumber1 = :productId AND sp.productNumber2 = p.productNumber AND )").list();
+//		
+//		if(products.isEmpty()) {
+//			System.out.println("Fehler");
+//			tx.commit();
+//			return;
+//		}else {
+//		for (Iterator iterator = products.iterator(); iterator.hasNext();) {
+//			Product product = (Product) iterator.next();
+//			System.out.println("Produktnummer: " + product.getProductNumber());
+//			System.out.println("Titel: " + product.getTitle());
+//			System.out.println("Rating: " + product.getRating());
+//			System.out.println("Ähnliche Produkte: ");
+//			for (Product similarProduct : product.getSimilarProducts()) {
+//				System.out.println(similarProduct.getProductNumber());
+//			}
+//			System.out.println("Angebote: ");
+//			for (Offer offer : product.getOffers()) {
+//				System.out.println(offer.getBranchName());
+//			}
+//			System.out.println();
+//		}
+//		}
+//		tx.commit();
 
 	}
 
 	@Override
 	public void addNewReview() {
-		// TODO Auto-generated method stub
+		Scanner input = new Scanner(System.in);
+		System.out.println("Nutzername: ");
+		String username = input.nextLine();
+		System.out.println("Produktnummer: ");
+		String productNumber = input.nextLine();
+		System.out.println("Sterne: ");
+		Short stars = input.nextShort();
+		System.out.println("Zusammenfassung: ");
+		String summary = input.nextLine();
+		System.out.println("Text: ");
+		String reviewText = input.nextLine();
+		Date date = new Date();
+		
+		Transaction tx = this.session.beginTransaction();
+		Review review = new Review();
+		review.setProductNumber(productNumber);
+		review.setUsername(username);
+		review.setStars(stars);
+		review.setSummary(summary);
+		review.setReviewText(reviewText);
+		review.setReviewDate((java.sql.Date) date);
+		
+		this.session.save(review);
+		tx.commit();
 
 	}
 
