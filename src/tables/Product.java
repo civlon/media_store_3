@@ -75,6 +75,10 @@ public class Product {
 		this.productGroup  = productGroup;
 	}
 	
+	public Product() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getProductNumber() {
 		return productNumber;
 	}

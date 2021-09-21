@@ -99,16 +99,15 @@ public class DatabaseInterface implements IDatabaseInterface {
 			tx.commit();
 			return products;
 		}
-		
-		
 	}
 
 	@Override
 	public List<Product> getSimilarCheaperProduct(String productId) {
 		
+		Product initialProduct = getProduct(productId);
+		
 		Transaction tx = this.session.beginTransaction();
 		
-		Product initialProduct = getProduct(productId);
 		Double initalPrice = getCheapestPrice(productId);
 		
 		List<Product> similarCheaperProducts = new ArrayList<Product>();
@@ -215,9 +214,10 @@ public class DatabaseInterface implements IDatabaseInterface {
 	@Override
 	public List<Offer> getOffers(String productId) {
 		
-		Transaction tx = this.session.beginTransaction();
-		
 		Product product = getProduct(productId);
+		
+		Transaction tx = this.session.beginTransaction();
+	
 		List<Offer> availableOffers = new ArrayList<Offer>();
 		
 		for (Iterator<Offer> iterator = product.getOffers().iterator(); iterator.hasNext();) {
