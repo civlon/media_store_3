@@ -25,88 +25,174 @@ import tables.Review;
 import tables.SimilarProducts;
 
 public class Main {
+	
+	static IDatabaseInterface databaseInterface = new DatabaseInterface();
 
 	public static void main(String[] args) {
-
-		SessionFactory factory = new Configuration().configure().buildSessionFactory();
-
-		Session session = factory.openSession();
-
-		Transaction tx = session.beginTransaction();
-		List products = session.createQuery("FROM Product WHERE productNumber = '3522177592'").list();
+		
+		System.out.println("Test von init()");
+		databaseInterface.init();
+		
+		String testProductId = "3120101702";
+		System.out.println("Test von getProduct()");
+		printProduct(databaseInterface.getProduct(testProductId));
+		
+		System.out.println("Test von getProducts()");
+		printProductList(databaseInterface.getProducts("Vorsicht Bildschirm!"));
+		
+//		System.out.println("Test von getCategoryTree()");
+//		databaseInterface.getCategoryTree();
+//		
+//		System.out.println("Test von getProductsByCategoryPath()");
+//		databaseInterface.getProductsByCategoryPath();
+		
+		System.out.println("Test von getTopProducts()");
+		printProductList(databaseInterface.getTopProducts(5));
+		
+		System.out.println("Test von getSimilarCheaperProduct()");
+		printProductList(databaseInterface.getSimilarCheaperProduct(testProductId));
+		
+//		System.out.println("Test von addNewReview()");
+//		databaseInterface.addNewReview();
+		
+		System.out.println("Test von getTrolls()");
+		databaseInterface.getTrolls(1.7);
+		
+		System.out.println("Test von getOffers()");
+		databaseInterface.getOffers(testProductId);
+		
+		System.out.println("Test von finish()");
+		databaseInterface.finish();
+	}
+	
+	public static void printProduct(Product product) {
+		System.out.println();
+		System.out.println("Produktnummer: " + product.getProductNumber());
+		System.out.println("Titel: " + product.getTitle());
+		System.out.println("Produktgruppe: " + product.getProductGroup());
+		System.out.println();
+	}
+	
+	public static void printProductList(List<Product> products) {
 		for (Iterator iterator = products.iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
-			System.out.println("Produktnummer: " + product.getProductNumber());
-			System.out.println("Titel: " + product.getTitle());
-			System.out.println("Produktgruppe: " + product.getProductGroup());
-			System.out.println("Ähnliche Produkte: ");
-			for (Product similarProduct : product.getSimilarProducts()) {
-				System.out.println(similarProduct.getProductNumber());
-			}
-			System.out.println("Angebote: ");
-			for (Offer offer : product.getOffers()) {
-				System.out.println(offer.getBranchName());
-			}
-			System.out.println();
-			break;
+			printProduct(product);
 		}
-
-		List products2 = session.createQuery("FROM Book").list();
-		for (Iterator iterator = products2.iterator(); iterator.hasNext();) {
-			Book book = (Book) iterator.next();
-			System.out.println("Produktnummer: " + book.getProductNumber());
-			System.out.println("Titel: " + book.getTitle());
-			System.out.println("Produktgruppe: " + book.getProductGroup());
-			System.out.println("Seitenzahl: " + book.getNumberOfPages());
-			System.out.println("Erscheinungsdatum: " + book.getReleaseDate());
-			System.out.println("ISBN-Nummer: " + book.getIsbn());
-			System.out.println("Verlag: " + book.getPublisher());
-			System.out.println("Autoren: ");
-			for (Author author : book.getAuthors()) {
-				System.out.println("Name: " + author.getName());
-			}
-			System.out.println();
-			break;
+	}
+	
+	public static void printCustomer(Customer customer) {
+		System.out.println();
+		System.out.println("FilialName: " + customer.getUsername());
+		System.out.println("Ort: " + customer.getCity());
+		System.out.println("PLZ: " + customer.getZipCode());
+		System.out.println("Straße: " + customer.getStreet());
+		System.out.println("Kontonummer: " + customer.getAccountNumber());
+		System.out.println();
+	}
+	
+	public static void printCustomerList(List<Customer> customers) {
+		for (Iterator iterator = customers.iterator(); iterator.hasNext();) {
+			Customer customer = (Customer) iterator.next();
+			printCustomer(customer);
 		}
-
-		List products3 = session.createQuery("FROM Music").list();
-		for (Iterator iterator = products3.iterator(); iterator.hasNext();) {
-			Music music = (Music) iterator.next();
-			System.out.println("Produktnummer: " + music.getProductNumber());
-			System.out.println("Titel: " + music.getTitle());
-			System.out.println("Produktgruppe: " + music.getProductGroup());
-			System.out.println("Label: " + music.getLabel());
-			System.out.println("Erscheinungsdatum: " + music.getReleaseDate());
-			System.out.println("Künstler: ");
-			for (Artist artist : music.getArtists()) {
-				System.out.println("Name: " + artist.getArtistName());
-			}
-			System.out.println("Songs: ");
-			for (MusicTitle track : music.getTracks()) {
-				System.out.println("Name: " + track.getMusicTitle());
-				break;
-			}
-			System.out.println();
-			break;
+	}
+	
+	public static void printOffer(Offer offer) {
+		System.out.println();
+		System.out.println("FilialName: " + offer.getBranchName());
+		System.out.println("Produktnummer: " + offer.getProductNumber());
+		System.out.println("Zustand: " + offer.getCondition());
+		System.out.println("Verfügbar: " + offer.getAvailability());
+		System.out.println("Preis: " + offer.getPrice());
+		System.out.println();
+	}
+	
+	public static void printOfferList(List<Offer> offers) {
+		for (Iterator iterator = offers.iterator(); iterator.hasNext();) {
+			Offer offer = (Offer) iterator.next();
+			printOffer(offer);
 		}
-
-		List products4 = session.createQuery("FROM Dvd").list();
-		for (Iterator iterator = products4.iterator(); iterator.hasNext();) {
-			Dvd dvd = (Dvd) iterator.next();
-			System.out.println("Produktnummer: " + dvd.getProductNumber());
-			System.out.println("Titel: " + dvd.getTitle());
-			System.out.println("Produktgruppe: " + dvd.getProductGroup());
-			System.out.println("Format: " + dvd.getFormat());
-			System.out.println("Laufzeit: " + dvd.getRuntime());
-			System.out.println("Regioncode: " + dvd.getRegionCode());
-			System.out.println("Beteiligte Personen: ");
-			for (InvolvedPersons involvedPerson : dvd.getInvolvedPersons()) {
-				System.out.println("Name: " + involvedPerson.getName());
-				System.out.println("Rolle: " + involvedPerson.getRole());
-			}
-			System.out.println();
-			break;
-		}
+	}
+}
+//		SessionFactory factory = new Configuration().configure().buildSessionFactory();
+//
+//		Session session = factory.openSession();
+//
+//		Transaction tx = session.beginTransaction();
+//		List products = session.createQuery("FROM Product WHERE productNumber = '3522177592'").list();
+//		for (Iterator iterator = products.iterator(); iterator.hasNext();) {
+//			Product product = (Product) iterator.next();
+//			System.out.println("Produktnummer: " + product.getProductNumber());
+//			System.out.println("Titel: " + product.getTitle());
+//			System.out.println("Produktgruppe: " + product.getProductGroup());
+//			System.out.println("Ähnliche Produkte: ");
+//			for (Product similarProduct : product.getSimilarProducts()) {
+//				System.out.println(similarProduct.getProductNumber());
+//			}
+//			System.out.println("Angebote: ");
+//			for (Offer offer : product.getOffers()) {
+//				System.out.println(offer.getBranchName());
+//			}
+//			System.out.println();
+//			break;
+//		}
+//
+//		List products2 = session.createQuery("FROM Book").list();
+//		for (Iterator iterator = products2.iterator(); iterator.hasNext();) {
+//			Book book = (Book) iterator.next();
+//			System.out.println("Produktnummer: " + book.getProductNumber());
+//			System.out.println("Titel: " + book.getTitle());
+//			System.out.println("Produktgruppe: " + book.getProductGroup());
+//			System.out.println("Seitenzahl: " + book.getNumberOfPages());
+//			System.out.println("Erscheinungsdatum: " + book.getReleaseDate());
+//			System.out.println("ISBN-Nummer: " + book.getIsbn());
+//			System.out.println("Verlag: " + book.getPublisher());
+//			System.out.println("Autoren: ");
+//			for (Author author : book.getAuthors()) {
+//				System.out.println("Name: " + author.getName());
+//			}
+//			System.out.println();
+//			break;
+//		}
+//
+//		List products3 = session.createQuery("FROM Music").list();
+//		for (Iterator iterator = products3.iterator(); iterator.hasNext();) {
+//			Music music = (Music) iterator.next();
+//			System.out.println("Produktnummer: " + music.getProductNumber());
+//			System.out.println("Titel: " + music.getTitle());
+//			System.out.println("Produktgruppe: " + music.getProductGroup());
+//			System.out.println("Label: " + music.getLabel());
+//			System.out.println("Erscheinungsdatum: " + music.getReleaseDate());
+//			System.out.println("Künstler: ");
+//			for (Artist artist : music.getArtists()) {
+//				System.out.println("Name: " + artist.getArtistName());
+//			}
+//			System.out.println("Songs: ");
+//			for (MusicTitle track : music.getTracks()) {
+//				System.out.println("Name: " + track.getMusicTitle());
+//				break;
+//			}
+//			System.out.println();
+//			break;
+//		}
+//
+//		List products4 = session.createQuery("FROM Dvd").list();
+//		for (Iterator iterator = products4.iterator(); iterator.hasNext();) {
+//			Dvd dvd = (Dvd) iterator.next();
+//			System.out.println("Produktnummer: " + dvd.getProductNumber());
+//			System.out.println("Titel: " + dvd.getTitle());
+//			System.out.println("Produktgruppe: " + dvd.getProductGroup());
+//			System.out.println("Format: " + dvd.getFormat());
+//			System.out.println("Laufzeit: " + dvd.getRuntime());
+//			System.out.println("Regioncode: " + dvd.getRegionCode());
+//			System.out.println("Beteiligte Personen: ");
+//			for (InvolvedPersons involvedPerson : dvd.getInvolvedPersons()) {
+//				System.out.println("Name: " + involvedPerson.getName());
+//				System.out.println("Rolle: " + involvedPerson.getRole());
+//			}
+//			System.out.println();
+//			break;
+//		}
 
 //		List products5 = session.createQuery("FROM Author").list();
 //		for (Iterator iterator = products5.iterator(); iterator.hasNext();) {
@@ -221,11 +307,11 @@ public class Main {
 //			System.out.println("Rezensionsdatum: " + review.getReviewDate());
 //			break;
 //		}
-
-		tx.commit();
-
-		session.close();
-
-	}
-
-}
+//
+//		tx.commit();
+//
+//		session.close();
+//
+//	}
+//
+//}

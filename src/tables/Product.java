@@ -65,8 +65,6 @@ public class Product {
 	@OneToMany(mappedBy = "product")
 	private List<Review> reviews = new ArrayList<Review>();
 	
-	public Product() {}
-	
 	public Product(String productNumber, String title, BigDecimal rating, int salesRank, String imagePath,
 			String productGroup) {
 		this.productNumber = productNumber;
