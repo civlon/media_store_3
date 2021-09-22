@@ -1,13 +1,16 @@
 package tables;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -32,6 +35,9 @@ public class Category {
 	
 	@OneToMany(mappedBy = "superCategory")
 	private List<Category> subCategories = new ArrayList<Category>();
+	
+	@ManyToMany(mappedBy = "categories")
+	private Set<Product> products = new HashSet<Product>();
 	
 	public Category() {}
 
@@ -72,6 +78,10 @@ public class Category {
 
 	public void setSubCategories(List<Category> subCategories) {
 		this.subCategories = subCategories;
+	}
+
+	public Set<Product> getProducts() {
+		return products;
 	}	
 
 }
