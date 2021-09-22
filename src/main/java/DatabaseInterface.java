@@ -108,13 +108,13 @@ public class DatabaseInterface implements IDatabaseInterface {
 		
 		Transaction tx = this.session.beginTransaction();
 		
-		Double initalPrice = getCheapestPrice(productId);
+		Double initalPrice = getCheapestPrice(initialProduct);
 		
 		List<Product> similarCheaperProducts = new ArrayList<Product>();
 		
 		for (Iterator<Product> iterator = initialProduct.getSimilarProducts().iterator(); iterator.hasNext();) {
 			Product product = (Product) iterator.next();
-			if(getCheapestPrice(product.getProductNumber()) < initalPrice) {
+			if(getCheapestPrice(product) < initalPrice) {
 				similarCheaperProducts.add(product);
 			}
 		}
@@ -122,13 +122,13 @@ public class DatabaseInterface implements IDatabaseInterface {
 		if(similarCheaperProducts.isEmpty()) {
 			return null;
 		}
+		tx.commit();
 		return similarCheaperProducts;
 		
 	}
 	
-	public Double getCheapestPrice(String productId) {
+	public Double getCheapestPrice(Product product) {
 		
-		Product product = getProduct(productId);
 		Double cheapestPrice = Double.MAX_VALUE;
 		
 		for (Iterator<Offer> iterator = product.getOffers().iterator(); iterator.hasNext();) {
@@ -185,7 +185,7 @@ public class DatabaseInterface implements IDatabaseInterface {
 		
 		for (Iterator<Customer> iterator = customers.iterator(); iterator.hasNext();) {
 			Customer customer = (Customer) iterator.next();
-			if(averageRatingofCustomer(customer) < border) {
+			if(averageRatingOfCustomer(customer) < border) {
 				trolls.add(customer);
 			}
 		}
@@ -196,7 +196,7 @@ public class DatabaseInterface implements IDatabaseInterface {
 		return trolls;
 	}
 	
-	public double averageRatingofCustomer(Customer customer) {
+	public double averageRatingOfCustomer(Customer customer) {
 
 		List<Short> stars = new ArrayList<Short>();
 		int accumulatedStars = 0;

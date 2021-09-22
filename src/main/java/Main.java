@@ -70,6 +70,7 @@ public class Main {
 		System.out.println("Produktnummer: " + product.getProductNumber());
 		System.out.println("Titel: " + product.getTitle());
 		System.out.println("Produktgruppe: " + product.getProductGroup());
+		System.out.println("Rating: " + product.getRating());
 		System.out.println();
 	}
 	
