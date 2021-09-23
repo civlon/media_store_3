@@ -36,9 +36,9 @@ public class DatabaseInterface implements IDatabaseInterface {
 	@Override
 	public Product getProduct(String productId) {
 		
-		Transaction tx = this.session.beginTransaction();
-		
 		List<Product> products = this.session.createQuery("FROM Product WHERE productNumber = :productId").setParameter("productId", productId).list();
+		
+		Transaction tx = this.session.beginTransaction();
 		
 		if(products.isEmpty()) {
 			tx.commit();
@@ -53,7 +53,6 @@ public class DatabaseInterface implements IDatabaseInterface {
 	@Override
 	public List<Product> getProducts(String pattern) {
 		
-		Transaction tx = this.session.beginTransaction();
 		String queryString = "FROM Product p WHERE p.title like :pattern";
 		
 		List<Product> products = this.session.createQuery(queryString).setParameter("pattern", pattern).list();
@@ -63,6 +62,8 @@ public class DatabaseInterface implements IDatabaseInterface {
 			return this.session.createQuery(queryString).getResultList();
 		}
 
+		Transaction tx = this.session.beginTransaction();
+		
 		if(products.isEmpty()) {
 			tx.commit();
 			return null;
@@ -227,21 +228,25 @@ public class DatabaseInterface implements IDatabaseInterface {
 	public List<Offer> getOffers(String productId) {
 		
 		Product product = getProduct(productId);
-		
-		Transaction tx = this.session.beginTransaction();
 	
 		List<Offer> availableOffers = new ArrayList<Offer>();
 		
-		for (Iterator<Offer> iterator = product.getOffers().iterator(); iterator.hasNext();) {
-			Offer offer = (Offer) iterator.next();
+		if(product.getOffers() == null) {
+			return null;
+		}
+		for (Offer offer : product.getOffers()) {
 			if(offer.getAvailability()) {
 				availableOffers.add(offer);
 			}
 		}
-		tx.commit();
+		
+		Transaction tx = this.session.beginTransaction();
+		
 		if(availableOffers.isEmpty()) {
+			tx.commit();
 			return null;
 		}
+		tx.commit();
 		return availableOffers;
 		
 	}
