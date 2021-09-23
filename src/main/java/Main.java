@@ -33,12 +33,19 @@ public class Main {
 		System.out.println("Test von init()");
 		databaseInterface.init();
 		
-		String testProductId = "3120101702";
-		System.out.println("Test von getProduct()");
-		printProduct(databaseInterface.getProduct(testProductId));
-		
-		System.out.println("Test von getProducts()");
-		printProductList(databaseInterface.getProducts("Vorsicht Bildschirm!"));
+		String testProductId1 = "3120101702";
+//		System.out.println("Test von getProduct()");
+//		printProduct(databaseInterface.getProduct(testProductId1));
+//		
+//		
+//		String testPattern1 = "Vor%";
+//		String testPattern2 = "V_rsicht Bildschirm!";
+//		//ka ob die so funktionieren
+//		String testPattern3 = "Vors[sim]cht Bildschirm!";
+//		String testPattern4 = "Vor'[^abc]'icht Bildschirm!";
+//		String testPattern5 = "Vor[a-t]icht Bildschirm!";
+//		System.out.println("Test von getProducts()");
+//		printProductList(databaseInterface.getProducts(testPattern1));
 		
 //		System.out.println("Test von getCategoryTree()");
 //		databaseInterface.getCategoryTree();
@@ -46,26 +53,31 @@ public class Main {
 //		System.out.println("Test von getProductsByCategoryPath()");
 //		databaseInterface.getProductsByCategoryPath();
 		
-		System.out.println("Test von getTopProducts()");
-		printProductList(databaseInterface.getTopProducts(5));
-		
+//		System.out.println("Test von getTopProducts()");
+//		printProductList(databaseInterface.getTopProducts(5));
+//		
+		String testProductId2 = "3257011202";
 		System.out.println("Test von getSimilarCheaperProduct()");
-		printProductList(databaseInterface.getSimilarCheaperProduct(testProductId));
+		printProductList(databaseInterface.getSimilarCheaperProduct(testProductId2));
 		
 //		System.out.println("Test von addNewReview()");
 //		databaseInterface.addNewReview();
 		
-		System.out.println("Test von getTrolls()");
-		databaseInterface.getTrolls(1.7);
-		
-		System.out.println("Test von getOffers()");
-		databaseInterface.getOffers(testProductId);
+//		System.out.println("Test von getTrolls()");
+//		databaseInterface.getTrolls(1.7);
+//		
+//		System.out.println("Test von getOffers()");
+//		databaseInterface.getOffers(testProductId);
 		
 		System.out.println("Test von finish()");
 		databaseInterface.finish();
 	}
 	
 	public static void printProduct(Product product) {
+		if(product == null) {
+			System.out.println("Kein Produkt gefunden.");
+			return;
+		}
 		System.out.println();
 		System.out.println("Produktnummer: " + product.getProductNumber());
 		System.out.println("Titel: " + product.getTitle());
@@ -75,13 +87,20 @@ public class Main {
 	}
 	
 	public static void printProductList(List<Product> products) {
-		for (Iterator iterator = products.iterator(); iterator.hasNext();) {
-			Product product = (Product) iterator.next();
+		if(products == null) {
+			System.out.println("Keine Produkte gefunden.");
+			return;
+		}
+		for (Product product : products) {
 			printProduct(product);
 		}
 	}
 	
 	public static void printCustomer(Customer customer) {
+		if(customer == null) {
+			System.out.println("Kein Kunde gefunden");
+			return;
+		}
 		System.out.println();
 		System.out.println("FilialName: " + customer.getUsername());
 		System.out.println("Ort: " + customer.getCity());
@@ -92,13 +111,20 @@ public class Main {
 	}
 	
 	public static void printCustomerList(List<Customer> customers) {
-		for (Iterator iterator = customers.iterator(); iterator.hasNext();) {
-			Customer customer = (Customer) iterator.next();
+		if(customers == null) {
+			System.out.println("Keine Kunden gefunden.");
+			return;
+		}
+		for (Customer customer : customers) {
 			printCustomer(customer);
 		}
 	}
 	
 	public static void printOffer(Offer offer) {
+		if(offer == null) {
+			System.out.println("Kein Angebot gefunden.");
+			return;
+		}
 		System.out.println();
 		System.out.println("FilialName: " + offer.getBranchName());
 		System.out.println("Produktnummer: " + offer.getProductNumber());
@@ -109,8 +135,11 @@ public class Main {
 	}
 	
 	public static void printOfferList(List<Offer> offers) {
-		for (Iterator iterator = offers.iterator(); iterator.hasNext();) {
-			Offer offer = (Offer) iterator.next();
+		if(offers == null) {
+			System.out.println("Keine Angebote gefunden.");
+			return;
+		}
+		for (Offer offer : offers) {
 			printOffer(offer);
 		}
 	}

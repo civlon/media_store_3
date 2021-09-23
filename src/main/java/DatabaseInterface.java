@@ -106,20 +106,26 @@ public class DatabaseInterface implements IDatabaseInterface {
 		
 		Product initialProduct = getProduct(productId);
 		
-		Transaction tx = this.session.beginTransaction();
+		Double initialPrice = getCheapestPrice(initialProduct);
 		
-		Double initalPrice = getCheapestPrice(initialProduct);
+		if(initialPrice == null) {
+			return null;
+		}
 		
 		List<Product> similarCheaperProducts = new ArrayList<Product>();
 		
-		for (Iterator<Product> iterator = initialProduct.getSimilarProducts().iterator(); iterator.hasNext();) {
-			Product product = (Product) iterator.next();
-			if(getCheapestPrice(product) < initalPrice) {
-				similarCheaperProducts.add(product);
+		for (Product product : initialProduct.getSimilarProducts()) {
+			if(getCheapestPrice(product) != null) {
+				if(getCheapestPrice(product) < initialPrice) {
+					similarCheaperProducts.add(product);
+				}
 			}
 		}
-		tx.commit();
+		
+		Transaction tx = this.session.beginTransaction();
+		
 		if(similarCheaperProducts.isEmpty()) {
+			tx.commit();
 			return null;
 		}
 		tx.commit();
@@ -131,10 +137,11 @@ public class DatabaseInterface implements IDatabaseInterface {
 		
 		Double cheapestPrice = Double.MAX_VALUE;
 		
-		for (Iterator<Offer> iterator = product.getOffers().iterator(); iterator.hasNext();) {
-			Offer offer = (Offer) iterator.next();
-			if(offer.getPrice() < cheapestPrice){
-				cheapestPrice = offer.getPrice();
+		for (Offer offer : product.getOffers()) {
+			if(offer.getPrice() != null) {
+				if(offer.getPrice() < cheapestPrice){
+					cheapestPrice = offer.getPrice();
+				}
 			}
 		}
 		if(cheapestPrice != Double.MAX_VALUE) {
