@@ -185,36 +185,41 @@ public class DatabaseInterface implements IDatabaseInterface {
 	@Override
 	public List<Customer> getTrolls(double border) {
 		
-		Transaction tx = this.session.beginTransaction();
-		
  		List<Customer> trolls = new ArrayList<Customer>();
 		List<Customer> customers = this.session.createQuery("FROM Customer").list();
 		
-		for (Iterator<Customer> iterator = customers.iterator(); iterator.hasNext();) {
-			Customer customer = (Customer) iterator.next();
-			if(averageRatingOfCustomer(customer) < border) {
-				trolls.add(customer);
+		for (Customer customer : customers) {
+			if(averageRatingOfCustomer(customer) != null) {
+				if(averageRatingOfCustomer(customer) < border) {
+					trolls.add(customer);
+				}
 			}
 		}
-		tx.commit();
+		
+		Transaction tx = this.session.beginTransaction();
+		
 		if(trolls.isEmpty()) {
+			tx.commit();
 			return null;
 		}
+		tx.commit();
 		return trolls;
 	}
 	
-	public double averageRatingOfCustomer(Customer customer) {
+	public Double averageRatingOfCustomer(Customer customer) {
 
 		List<Short> stars = new ArrayList<Short>();
 		int accumulatedStars = 0;
 		
-		for (Iterator<Review> iterator = customer.getReviews().iterator(); iterator.hasNext();) {
-			Review review = (Review) iterator.next();
+		for (Review review : customer.getReviews()) {
 			stars.add(review.getStars());
 			accumulatedStars = accumulatedStars + review.getStars();
 		}
 		
-		return accumulatedStars /  stars.size();
+		if(stars.isEmpty()) {
+			return null;
+		}
+		return (double) (accumulatedStars /  stars.size());
 		
 	}
 

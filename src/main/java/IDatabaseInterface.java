@@ -28,5 +28,7 @@ public interface IDatabaseInterface {
 	
 	List<Customer> getTrolls(double border);
 	
-	List<Offer> getOffers(String productId);	
+	Double averageRatingOfCustomer(Customer customer);
+	
+	List<Offer> getOffers(String productId);
 }

@@ -56,15 +56,15 @@ public class Main {
 //		System.out.println("Test von getTopProducts()");
 //		printProductList(databaseInterface.getTopProducts(5));
 //		
-		String testProductId2 = "3257011202";
-		System.out.println("Test von getSimilarCheaperProduct()");
-		printProductList(databaseInterface.getSimilarCheaperProduct(testProductId2));
+//		String testProductId2 = "3257011202";
+//		System.out.println("Test von getSimilarCheaperProduct()");
+//		printProductList(databaseInterface.getSimilarCheaperProduct(testProductId2));
 		
 //		System.out.println("Test von addNewReview()");
 //		databaseInterface.addNewReview();
 		
-//		System.out.println("Test von getTrolls()");
-//		databaseInterface.getTrolls(1.7);
+		System.out.println("Test von getTrolls()");
+		printCustomerList(databaseInterface.getTrolls(3.5));
 //		
 //		System.out.println("Test von getOffers()");
 //		databaseInterface.getOffers(testProductId);
@@ -102,11 +102,12 @@ public class Main {
 			return;
 		}
 		System.out.println();
-		System.out.println("FilialName: " + customer.getUsername());
+		System.out.println("Nutzername: " + customer.getUsername());
 		System.out.println("Ort: " + customer.getCity());
 		System.out.println("PLZ: " + customer.getZipCode());
 		System.out.println("Straﬂe: " + customer.getStreet());
 		System.out.println("Kontonummer: " + customer.getAccountNumber());
+		System.out.println("Durchschnittliche Bewertung: " + databaseInterface.averageRatingOfCustomer(customer));
 		System.out.println();
 	}
 	
