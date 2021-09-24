@@ -10,7 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -31,9 +33,13 @@ public class Category {
 	private String name;
 	
 	@Column(name = "super_category", nullable = true)
-	private Integer superCategory;
+	private Integer superCategoryId;
 	
-	@OneToMany(mappedBy = "superCategory")
+	@ManyToOne
+	@JoinColumn(name = "super_category", insertable = false, updatable = false)
+	private Category superCategory;
+	
+	@OneToMany(mappedBy = "superCategoryId")
 	private List<Category> subCategories = new ArrayList<Category>();
 	
 	@ManyToMany(mappedBy = "categories")
@@ -41,11 +47,11 @@ public class Category {
 	
 	public Category() {}
 
-	public Category(@NotNull int categoryId, @NotNull String name, Integer superCategory) {
+	public Category(@NotNull int categoryId, @NotNull String name, Integer superCategoryId) {
 		super();
 		this.categoryId = categoryId;
 		this.name = name;
-		this.superCategory = superCategory;
+		this.superCategoryId = superCategoryId;
 	}
 
 	public int getCategoryId() {
@@ -64,11 +70,19 @@ public class Category {
 		this.name = name;
 	}
 
-	public Integer getSuperCategory() {
+	public Integer getSuperCategoryId() {
+		return superCategoryId;
+	}
+
+	public void setSuperCategoryId(Integer superCategoryId) {
+		this.superCategoryId = superCategoryId;
+	}
+
+	public Category getSuperCategory() {
 		return superCategory;
 	}
 
-	public void setSuperCategory(Integer superCategory) {
+	public void setSuperCategory(Category superCategory) {
 		this.superCategory = superCategory;
 	}
 

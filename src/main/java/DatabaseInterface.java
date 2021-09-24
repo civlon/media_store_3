@@ -3,12 +3,14 @@ package main.java;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import tables.Category;
 import tables.Customer;
 import tables.Offer;
 import tables.Product;
@@ -53,36 +55,63 @@ public class DatabaseInterface implements IDatabaseInterface {
 	@Override
 	public List<Product> getProducts(String pattern) {
 
-		String queryString = "FROM Product p WHERE p.title like :pattern";
-
-		List<Product> products = this.session.createQuery(queryString).setParameter("pattern", pattern).list();
-
+		Transaction tx = this.session.beginTransaction();
+		List<Product> products;
+		
+		
 		if (pattern == null) {
-			queryString = "From Product";
-			return this.session.createQuery(queryString).getResultList();
+			String queryString = "FROM Product";			
+			products = this.session.createQuery(queryString).getResultList();			
+		} else {
+			String queryString = "FROM Product p WHERE p.title like :pattern";
+			products = this.session.createQuery(queryString).setParameter("pattern", pattern).getResultList();
 		}
 
-		Transaction tx = this.session.beginTransaction();
+		tx.commit();
 
 		if (products.isEmpty()) {
-			tx.commit();
 			return null;
 		} else {
-			tx.commit();
 			return products;
 		}
-
 	}
 
 	@Override
-	public void getCategoryTree() {
-		// TODO Auto-generated method stub
+	public Category getCategoryTree() {
+		String query = "FROM Category WHERE superCategoryId IS NULL";
 
+		Category rootCategory = new Category();
+
+		Transaction tx = this.session.beginTransaction();
+		List<Category> mainCategories = this.session.createQuery(query).getResultList();
+		tx.commit();
+
+		rootCategory.setSubCategories(mainCategories);
+
+		return rootCategory;
 	}
 
 	@Override
-	public void getProductsByCategoryPath() {
-		// TODO Auto-generated method stub
+	public Set<Product> getProductsByCategoryPath(List<String> categoriePath) {
+		Category rootCategory = this.getCategoryTree();
+		
+		Category superCategory = rootCategory;
+		Category category = rootCategory;
+		
+		for (String categoryName : categoriePath) {
+			for (Category subCategory : superCategory.getSubCategories()) {
+				if (subCategory.getName().contentEquals(categoryName)) {
+					category = subCategory;
+					break;
+				}
+			}
+			if (category == superCategory) {
+				//TODO Exception
+			}
+			superCategory = category;
+		};
+		
+		return category.getProducts();
 
 	}
 

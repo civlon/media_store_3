@@ -1,8 +1,10 @@
 package main.java;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
+import tables.Category;
 import tables.Customer;
 import tables.Offer;
 import tables.Product;
@@ -29,33 +31,39 @@ public class Main {
 //		String testPattern5 = "Vor[a-t]icht Bildschirm!";
 //		System.out.println("Test von getProducts()");
 //		printProductList(databaseInterface.getProducts(testPattern1));
-
-//		System.out.println("Test von getCategoryTree()");
-//		databaseInterface.getCategoryTree();
-//		
-//		System.out.println("Test von getProductsByCategoryPath()");
-//		databaseInterface.getProductsByCategoryPath();
+//
+		System.out.println("Test von getCategoryTree()");
+		Category root = databaseInterface.getCategoryTree();
+		
+		System.out.println("Test von getProductsByCategoryPath()");
+		List<String> categoryPath = new ArrayList<String>();
+		categoryPath.add("Formate");
+		categoryPath.add("Box-Sets");
+		categoryPath.add("Country");
+		for (Product p : databaseInterface.getProductsByCategoryPath(categoryPath)) {
+			printProduct(p);
+		};
 
 //		System.out.println("Test von getTopProducts()");
 //		printProductList(databaseInterface.getTopProducts(5));
 
 //		String testProductId2 = "3257011202";
 //		System.out.println("Test von getSimilarCheaperProduct()");
-//		printProductList(databaseInterface.getSimilarCheaperProduct(testProductId2));
-
-		System.out.println("Test von addNewReview()");
-		Date date = new Date(1442546);
-		Review testReview = new Review("-jayp-", "3257011202", (short) 3, "Super Produkt", "Dieses Produkt ist super.",
-				date);
-		if (databaseInterface.addNewReview(testReview)) {
-			System.out.println("Review erfolgreich hinzugefügt.");
-		} else {
-			System.out.println("Review konnte nicht hinzugefügt werden");
-		}
-
+////		printProductList(databaseInterface.getSimilarCheaperProduct(testProductId2));
+//
+//		System.out.println("Test von addNewReview()");
+//		Date date = new Date(1442546);
+//		Review testReview = new Review("-jayp-", "3257011202", (short) 3, "Super Produkt", "Dieses Produkt ist super.",
+//				date);
+//		if (databaseInterface.addNewReview(testReview)) {
+//			System.out.println("Review erfolgreich hinzugefügt.");
+//		} else {
+//			System.out.println("Review konnte nicht hinzugefügt werden");
+//		}
+//
 //		System.out.println("Test von getTrolls()");
 //		printCustomerList(databaseInterface.getTrolls(3.5));
-
+//
 //		String testProductId3 = "3257800010";
 //		System.out.println("Test von getOffers()");
 //		printOfferList(databaseInterface.getOffers(testProductId3));
