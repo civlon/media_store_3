@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,11 +22,10 @@ public class DatabaseInterface implements IDatabaseInterface {
 	public Session session;
 
 	@Override
-	public void init() {
+	public void init() throws HibernateException {
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 
 		this.session = factory.openSession();
-
 	}
 
 	@Override

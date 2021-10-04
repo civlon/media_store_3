@@ -3,6 +3,8 @@ package main.java;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.HibernateException;
+
 import tables.Category;
 import tables.Customer;
 import tables.Offer;
@@ -10,7 +12,7 @@ import tables.Product;
 import tables.Review;
 
 public interface IDatabaseInterface {
-	void init();
+	void init() throws HibernateException;
 	
 	void finish();
 	
