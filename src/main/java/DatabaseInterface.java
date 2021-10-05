@@ -57,11 +57,10 @@ public class DatabaseInterface implements IDatabaseInterface {
 
 		Transaction tx = this.session.beginTransaction();
 		List<Product> products;
-		
-		
+
 		if (pattern == null) {
-			String queryString = "FROM Product";			
-			products = this.session.createQuery(queryString).getResultList();			
+			String queryString = "FROM Product";
+			products = this.session.createQuery(queryString).getResultList();
 		} else {
 			String queryString = "FROM Product p WHERE p.title like :pattern";
 			products = this.session.createQuery(queryString).setParameter("pattern", pattern).getResultList();
@@ -94,10 +93,10 @@ public class DatabaseInterface implements IDatabaseInterface {
 	@Override
 	public Set<Product> getProductsByCategoryPath(List<String> categoriePath) {
 		Category rootCategory = this.getCategoryTree();
-		
+
 		Category superCategory = rootCategory;
 		Category category = rootCategory;
-		
+
 		for (String categoryName : categoriePath) {
 			for (Category subCategory : superCategory.getSubCategories()) {
 				if (subCategory.getName().contentEquals(categoryName)) {
@@ -106,11 +105,12 @@ public class DatabaseInterface implements IDatabaseInterface {
 				}
 			}
 			if (category == superCategory) {
-				//TODO Exception
+				// TODO Exception
 			}
 			superCategory = category;
-		};
-		
+		}
+		;
+
 		return category.getProducts();
 
 	}
@@ -185,15 +185,32 @@ public class DatabaseInterface implements IDatabaseInterface {
 	public Boolean addNewReview(Review review) {
 
 		Product product = getProduct(review.getProductNumber());
-		Customer customer = getCustomer(review.getSummary());
+		Customer customer = getCustomer(review.getUsername());
+		Review checkReview = getReview(review.getUsername(), review.getProductNumber());
 
 		Transaction tx = this.session.beginTransaction();
 
-		if (validateReview(review, product, customer)) {
+		if (validateReview(review, product, customer, checkReview)) {
 			review.setCustomer(customer);
 			review.setProduct(product);
 
 			this.session.save(review);
+
+			// for testing purposes
+			List<Review> reviews = this.session
+					.createQuery("FROM Review WHERE username = :username AND productNumber = :productNumber")
+					.setParameter("username", review.getUsername())
+					.setParameter("productNumber", review.getProductNumber()).list();
+			Review newReview = reviews.get(0);
+			System.out.println();
+			System.out.println("Nutzername: " + newReview.getUsername());
+			System.out.println("Produktnummer: " + newReview.getProductNumber());
+			System.out.println("Sterne: " + newReview.getStars());
+			System.out.println("Zusammenfassung: " + newReview.getSummary());
+			System.out.println("Text: " + newReview.getReviewText());
+			System.out.println("Datum: " + newReview.getReviewDate());
+			System.out.println();
+
 			tx.commit();
 			return true;
 		}
@@ -202,39 +219,66 @@ public class DatabaseInterface implements IDatabaseInterface {
 
 	}
 
-	public Boolean validateReview(Review review, Product product, Customer customer) {
+	public Boolean validateReview(Review review, Product product, Customer customer, Review checkReview) {
 		// check user name
-		if (review.getUsername() != null && review.getUsername().length() < 30) {
-			// check product number
-			if (review.getProductNumber() != null) {
-				// check stars
-				if (review.getStars() != null && review.getStars() > 0.0 && review.getStars() < 5.1) {
-					// check summary
-					if (review.getSummary() != null && review.getSummary().length() < 100) {
-						// check review text
-						if (review.getReviewText() != null) {
-							// check review date
-							if (review.getReviewDate() != null
-									&& review.getReviewDate().compareTo(new Date(System.currentTimeMillis())) < 0) {
-								// check if customer exists
-								if (customer != null) {
-									// check if product exists
-									if (product != null) {
-										return true;
-									}
-								}
-							}
-						}
-					}
-				}
-
-			}
+		if (review.getUsername() == null || review.getUsername().length() >= 30) {
+			return false;
 		}
-		return false;
+		// check product number
+		if (review.getProductNumber() == null) {
+			return false;
+		}
+		// check stars
+		if (review.getStars() == null || review.getStars() <= 0.0 || review.getStars() >= 5.0) {
+			return false;
+		}
+		// check summary
+		if (review.getSummary() == null || review.getSummary().length() >= 100) {
+			return false;
+		}
+		// check review text
+		if (review.getReviewText() == null) {
+			return false;
+		}
+		// check review date
+		if (review.getReviewDate() == null
+				|| review.getReviewDate().compareTo(new Date(System.currentTimeMillis())) > 0) {
+			return false;
+		}
+		// check if customer exists
+		if (customer == null) {
+			return false;
+		}
+		// check if product exists
+		if (product == null) {
+			return false;
+		}
+		// check if review from user for this product already exists
+		if (checkReview != null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public Review getReview(String username, String productNumber) {
+		List<Review> reviews = this.session
+				.createQuery("FROM Review WHERE username = :username AND productNumber = :productNumber")
+				.setParameter("username", username).setParameter("productNumber", productNumber).list();
+
+		Transaction tx = this.session.beginTransaction();
+
+		if (reviews.isEmpty()) {
+			tx.commit();
+			return null;
+		} else {
+			tx.commit();
+			return reviews.get(0);
+		}
 	}
 
 	public Customer getCustomer(String username) {
-		List<Customer> customers = this.session.createQuery("FROM Product WHERE productNumber = :username")
+		List<Customer> customers = this.session.createQuery("FROM Customer WHERE username = :username")
 				.setParameter("username", username).list();
 
 		Transaction tx = this.session.beginTransaction();
