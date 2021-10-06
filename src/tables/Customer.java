@@ -104,5 +104,18 @@ public class Customer {
 		this.reviews = reviews;
 	}
 	
+	public double getAverageRating() {
+		if (this.reviews == null || this.reviews.size() == 0) {
+			return 0.0;
+		}
+		
+		int sumOfStars = 0;
+		
+		for (Review review : this.reviews) {
+			sumOfStars += review.getStars();
+		}
+		
+		return (double) sumOfStars / this.reviews.size();
+	}
 	
 }

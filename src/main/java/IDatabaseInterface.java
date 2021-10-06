@@ -32,7 +32,5 @@ public interface IDatabaseInterface {
 	
 	List<Customer> getTrolls(double border);
 	
-	Double averageRatingOfCustomer(Customer customer);
-	
 	List<Offer> getOffers(String productId);
 }

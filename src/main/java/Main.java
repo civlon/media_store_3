@@ -104,7 +104,7 @@ public class Main {
 		System.out.println("PLZ: " + customer.getZipCode());
 		System.out.println("Straﬂe: " + customer.getStreet());
 		System.out.println("Kontonummer: " + customer.getAccountNumber());
-		System.out.println("Durchschnittliche Bewertung: " + databaseInterface.averageRatingOfCustomer(customer));
+		System.out.println("Durchschnittliche Bewertung: " + customer.getAverageRating());
 		System.out.println();
 	}
 

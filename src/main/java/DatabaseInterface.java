@@ -299,10 +299,8 @@ public class DatabaseInterface implements IDatabaseInterface {
 		List<Customer> customers = this.session.createQuery("FROM Customer").list();
 
 		for (Customer customer : customers) {
-			if (averageRatingOfCustomer(customer) != null) {
-				if (averageRatingOfCustomer(customer) < border) {
-					trolls.add(customer);
-				}
+			if (customer.getAverageRating() > 0 && customer.getAverageRating() < border) {
+				trolls.add(customer);				
 			}
 		}
 
@@ -314,23 +312,6 @@ public class DatabaseInterface implements IDatabaseInterface {
 		}
 		tx.commit();
 		return trolls;
-	}
-
-	public Double averageRatingOfCustomer(Customer customer) {
-
-		List<Short> stars = new ArrayList<Short>();
-		int accumulatedStars = 0;
-
-		for (Review review : customer.getReviews()) {
-			stars.add(review.getStars());
-			accumulatedStars = accumulatedStars + review.getStars();
-		}
-
-		if (stars.isEmpty()) {
-			return null;
-		}
-		return (double) (accumulatedStars / stars.size());
-
 	}
 
 	@Override
