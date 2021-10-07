@@ -1,0 +1,83 @@
+package ui;
+
+import java.util.List;
+
+import tables.Customer;
+import tables.Offer;
+import tables.Product;
+
+public class EntityPrinter {
+
+	private static void printProduct(Product product) {
+		if (product == null) {
+			System.out.println("Kein Produkt gefunden.");
+			return;
+		}
+		System.out.println();
+		System.out.println("Produktnummer: " + product.getProductNumber());
+		System.out.println("Titel: " + product.getTitle());
+		System.out.println("Produktgruppe: " + product.getProductGroup());
+		System.out.println("Rating: " + product.getRating());
+		System.out.println();
+	}
+
+	private static void printProductList(List<Product> products) {
+		if (products == null) {
+			System.out.println("Keine Produkte gefunden.");
+			return;
+		}
+		for (Product product : products) {
+			printProduct(product);
+		}
+	}
+
+	private static void printCustomer(Customer customer) {
+		if (customer == null) {
+			System.out.println("Kein Kunde gefunden");
+			return;
+		}
+		System.out.println();
+		System.out.println("Nutzername: " + customer.getUsername());
+		System.out.println("Ort: " + customer.getCity());
+		System.out.println("PLZ: " + customer.getZipCode());
+		System.out.println("Straße: " + customer.getStreet());
+		System.out.println("Kontonummer: " + customer.getAccountNumber());
+		System.out.println("Durchschnittliche Bewertung: " + customer.getAverageRating());
+		System.out.println();
+	}
+
+	private static void printCustomerList(List<Customer> customers) {
+		if (customers == null) {
+			System.out.println("Keine Kunden gefunden.");
+			return;
+		}
+		for (Customer customer : customers) {
+			printCustomer(customer);
+		}
+	}
+
+	private static void printOffer(Offer offer) {
+		if (offer == null) {
+			System.out.println("Kein Angebot gefunden.");
+			return;
+		}
+		System.out.println();
+		System.out.println("FilialName: " + offer.getBranchName());
+		System.out.println("Produktnummer: " + offer.getProductNumber());
+		System.out.println("Zustand: " + offer.getCondition());
+		System.out.println("Verfügbar: " + offer.getAvailability());
+		System.out.println("Preis: " + offer.getPrice());
+		System.out.println();
+	}
+
+	private static void printOfferList(List<Offer> offers) {
+		if (offers == null) {
+			System.out.println("Keine Angebote gefunden.");
+			return;
+		}
+		for (Offer offer : offers) {
+			printOffer(offer);
+		}
+	}
+
+}

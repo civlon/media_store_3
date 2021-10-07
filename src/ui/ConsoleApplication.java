@@ -1,13 +1,19 @@
 package ui;
 
+import java.util.List;
 import java.util.Scanner;
 
 import main.java.DatabaseInterface;
 import main.java.IDatabaseInterface;
+import tables.Customer;
+import tables.Offer;
+import tables.Product;
 
 public class ConsoleApplication {
 
 	private static IDatabaseInterface databaseInterface = new DatabaseInterface();
+
+	private static EntityPrinter entityPrinter = new EntityPrinter();
 
 	public static void main(String[] args) {
 
@@ -30,7 +36,7 @@ public class ConsoleApplication {
 
 			switch (desiredMenueOption) {
 			case 1:
-				
+
 				break;
 			case 2:
 
@@ -63,7 +69,7 @@ public class ConsoleApplication {
 				databaseInterface.finish();
 				continueProgram = false;
 				break;
-				
+
 			default:
 				System.out.println();
 				System.out.println("Ungültige Eingabe! Bitte erneut versuchen.");
@@ -75,12 +81,12 @@ public class ConsoleApplication {
 
 	}
 
-	public static void printWelcome() {
+	private static void printWelcome() {
 		System.out.println("Herzlich Willkommen zum dritten Testat des Moduls \"Datenbank-Praktikum\".");
 		System.out.println();
 	}
 
-	public static void printMenue() {
+	private static void printMenue() {
 		System.out.println();
 		System.out.println(
 				"Bitte wählen Sie durch Eingabe der entsprechenden Ziffer, welche Funktionalität Sie testen wollen:");
