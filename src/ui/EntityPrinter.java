@@ -1,6 +1,7 @@
 package ui;
 
 import java.util.List;
+import java.util.Set;
 
 import tables.Customer;
 import tables.Offer;
@@ -8,7 +9,7 @@ import tables.Product;
 
 public class EntityPrinter {
 
-	private static void printProduct(Product product) {
+	public void printProduct(Product product) {
 		if (product == null) {
 			System.out.println("Kein Produkt gefunden.");
 			return;
@@ -21,7 +22,7 @@ public class EntityPrinter {
 		System.out.println();
 	}
 
-	private static void printProductList(List<Product> products) {
+	public void printProductList(List<Product> products) {
 		if (products == null) {
 			System.out.println("Keine Produkte gefunden.");
 			return;
@@ -31,7 +32,17 @@ public class EntityPrinter {
 		}
 	}
 
-	private static void printCustomer(Customer customer) {
+	public void printProductSet(Set<Product> products) {
+		if (products == null) {
+			System.out.println("Keine Produkte gefunden.");
+			return;
+		}
+		for (Product product : products) {
+			printProduct(product);
+		}
+	}
+
+	public void printCustomer(Customer customer) {
 		if (customer == null) {
 			System.out.println("Kein Kunde gefunden");
 			return;
@@ -46,7 +57,7 @@ public class EntityPrinter {
 		System.out.println();
 	}
 
-	private static void printCustomerList(List<Customer> customers) {
+	public void printCustomerList(List<Customer> customers) {
 		if (customers == null) {
 			System.out.println("Keine Kunden gefunden.");
 			return;
@@ -56,7 +67,7 @@ public class EntityPrinter {
 		}
 	}
 
-	private static void printOffer(Offer offer) {
+	public void printOffer(Offer offer) {
 		if (offer == null) {
 			System.out.println("Kein Angebot gefunden.");
 			return;
@@ -70,7 +81,7 @@ public class EntityPrinter {
 		System.out.println();
 	}
 
-	private static void printOfferList(List<Offer> offers) {
+	public void printOfferList(List<Offer> offers) {
 		if (offers == null) {
 			System.out.println("Keine Angebote gefunden.");
 			return;
