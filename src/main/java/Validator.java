@@ -16,7 +16,7 @@ public class Validator {
 
 	public Boolean isProductIdValid(String productId) {
 		if (productId.length() > 10 || productId.length() < 10) {
-			errorMessage = "The given product number is invalid";
+			errorMessage = "Die Produktnummer hat nicht die Länge 10";
 			return false;
 		}
 		return true;
@@ -27,12 +27,16 @@ public class Validator {
 	}
 
 	public Boolean isCategoryPathValid(String categoryPath) {
+		if (!categoryPath.contains("->")) {
+			errorMessage = "Der Pfad ist im falschem Format.";
+			return false;
+		}
 		return true;
 	}
 
 	public Boolean isProductBorderValid(int k) {
 		if (k < 0) {
-			errorMessage = "Border is invalid.";
+			errorMessage = "Die angegebene Grenze ist nicht erlaubt.";
 			return false;
 		}
 		return true;
@@ -40,7 +44,7 @@ public class Validator {
 
 	public Boolean isRatingBorderValid(Double averageRating) {
 		if (averageRating < 0 || averageRating > 5.0) {
-			errorMessage = "Border is invalid.";
+			errorMessage = "Das angegebene Rating ist nicht im Bereich von 0-5";
 			return false;
 		}
 		return true;
@@ -50,48 +54,48 @@ public class Validator {
 
 		// check user name
 		if (review.getUsername() == null || review.getUsername().length() >= 30) {
-			errorMessage = "Username is invalid.";
+			errorMessage = "Der Nutzername ist invalid.";
 			return false;
 		}
 		// check product number
 		if (review.getProductNumber() == null) {
-			errorMessage = "ProductNumber is invalid.";
+			errorMessage = "Die Produktnummer ist invalid.";
 			return false;
 		}
 		// check stars
 		if (review.getStars() == null || review.getStars() < 0.0 || review.getStars() > 5.0) {
-			errorMessage = "Stars is invalid.";
+			errorMessage = "Die Sternenanzahl ist invalid.";
 			return false;
 		}
 		// check summary
 		if (review.getSummary() == null || review.getSummary().length() >= 100) {
-			errorMessage = "Summary is invalid.";
+			errorMessage = "Die Zusammenfassung ist invalid.";
 			return false;
 		}
 		// check review text
 		if (review.getReviewText() == null) {
-			errorMessage = "Review Text is invalid.";
+			errorMessage = "Der Rezensionstext ist invalid.";
 			return false;
 		}
 		// check review date
 		if (review.getReviewDate() == null
 				|| review.getReviewDate().compareTo(new Date(System.currentTimeMillis())) > 0) {
-			errorMessage = "Review Date is invalid.";
+			errorMessage = "Das Rezensionsdatum ist invalid.";
 			return false;
 		}
 		// check if customer exists
 		if (customer == null) {
-			errorMessage = "Customer object of review is invalid.";
+			errorMessage = "Der angegebene Kunde existiert nicht.";
 			return false;
 		}
 		// check if product exists
 		if (product == null) {
-			errorMessage = "Product object of review is invalid.";
+			errorMessage = "Das rezensierte Produkt existiert nicht.";
 			return false;
 		}
 		// check if review from user for this product already exists
 		if (checkReview != null) {
-			errorMessage = "There already exists a review from the user for the given product.";
+			errorMessage = "Es existiert bereits eine Rezension für dieses Produkt von dem angegebenen Kunden";
 			return false;
 		}
 

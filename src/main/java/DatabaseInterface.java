@@ -191,10 +191,16 @@ public class DatabaseInterface implements IDatabaseInterface {
 		review.setCustomer(customer);
 		review.setProduct(product);
 
-		this.session.save(review);
-
+		try {
+			this.session.save(review);
+			tx.commit();
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			;
+		}
 		tx.commit();
-		return true;
+		return false;
 
 	}
 
