@@ -1,11 +1,10 @@
 package ui;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
-
-import org.hibernate.internal.util.EntityPrinter;
 
 import main.java.DatabaseInterface;
 import main.java.IDatabaseInterface;
@@ -14,6 +13,7 @@ import tables.Category;
 import tables.Customer;
 import tables.Offer;
 import tables.Product;
+import tables.Review;
 
 public class ConsoleApplication {
 
@@ -43,31 +43,31 @@ public class ConsoleApplication {
 
 			switch (desiredMenueOption) {
 			case 1:
-
+				getProduct();
 				break;
 			case 2:
-
+				getProducts();
 				break;
 			case 3:
-
+				getCategoryTree();
 				break;
 			case 4:
-
+				getProductsByCategoryPath();
 				break;
 			case 5:
-
+				getTopProducts();
 				break;
 			case 6:
-
+				getSimilarCheaperProduct();
 				break;
 			case 7:
-
+				addNewReview();
 				break;
 			case 8:
-
+				getTrolls();
 				break;
 			case 9:
-
+				getOffers();
 				break;
 			case 0:
 				System.out.println();
@@ -203,6 +203,19 @@ public class ConsoleApplication {
 		}
 	}
 
+	private static void addNewReview() {
+		Review review = callUpRating();
+
+		if (review == null) {
+			return;
+		}
+
+		databaseInterface.addNewReview(review);
+
+		entityPrinter.printReview(databaseInterface.getReview(review.getUsername(), review.getProductNumber()));
+
+	}
+
 	private static void getTrolls() {
 		double averageRating = callUpAverageRating();
 
@@ -247,6 +260,8 @@ public class ConsoleApplication {
 
 		if (!validator.isProductIdValid(productID)) {
 			System.out.print(validator.getErrorMessage());
+			System.out.println();
+			System.out.println();
 			return null;
 		}
 
@@ -263,6 +278,8 @@ public class ConsoleApplication {
 
 		if (!validator.isPatternValid(productIdPattern)) {
 			System.out.print(validator.getErrorMessage());
+			System.out.println();
+			System.out.println();
 			return null;
 		}
 
@@ -280,6 +297,8 @@ public class ConsoleApplication {
 
 		if (!validator.isCategoryPathValid(categoryPath)) {
 			System.out.print(validator.getErrorMessage());
+			System.out.println();
+			System.out.println();
 			return null;
 		}
 
@@ -298,10 +317,54 @@ public class ConsoleApplication {
 
 		if (!validator.isProductBorderValid(k)) {
 			System.out.print(validator.getErrorMessage());
+			System.out.println();
+			System.out.println();
 			return (Integer) null;
 		}
 
 		return k;
+	}
+
+	private static Review callUpRating() {
+		Validator validator = new Validator();
+
+		System.out.println();
+		System.out.println("Bitte geben sie die Reviewdaten ein: ");
+		System.out.println("Geben sie den Nutzernamen an: ");
+		System.out.println();
+		String username = input.next();
+		System.out.println("Geben sie die Produkt Nummer an: ");
+		System.out.println();
+		String productNumber = input.next();
+		System.out.println("Geben sie die Sternanzahl an: ");
+		System.out.println();
+		Short stars = input.nextShort();
+		// need to call nextLine because nextShort does not finish the line
+		input.nextLine();
+		System.out.println("Geben sie die Zusammenfassung an: ");
+		System.out.println();
+		String summary = input.nextLine();
+		System.out.println("Geben sie den Rezensionstext an: ");
+		System.out.println();
+		String reviewText = input.nextLine();
+		System.out.println("Geben sie das Rezensionsdatum an (im Format yyyy-MM-dd): ");
+		System.out.println();
+		String reviewDateInput = input.nextLine();
+		Date reviewDate = java.sql.Date.valueOf(reviewDateInput);
+
+		Review review = new Review(username, productNumber, stars, summary, reviewText, reviewDate);
+		Product product = databaseInterface.getProduct(productNumber);
+		Customer customer = databaseInterface.getCustomer(username);
+		Review checkReview = databaseInterface.getReview(username, productNumber);
+
+		if (!validator.isReviewValid(review, product, customer, checkReview)) {
+			System.out.print(validator.getErrorMessage());
+			System.out.println();
+			System.out.println();
+			return null;
+		}
+		return review;
+
 	}
 
 	private static double callUpAverageRating() {
@@ -314,6 +377,8 @@ public class ConsoleApplication {
 
 		if (!validator.isRatingBorderValid(averageRating)) {
 			System.out.print(validator.getErrorMessage());
+			System.out.println();
+			System.out.println();
 			return (Double) null;
 		}
 

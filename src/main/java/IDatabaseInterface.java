@@ -13,24 +13,28 @@ import tables.Review;
 
 public interface IDatabaseInterface {
 	void init() throws HibernateException;
-	
+
 	void finish();
-	
+
 	Product getProduct(String productId);
-	
+
+	Customer getCustomer(String username);
+
+	Review getReview(String username, String productNumber);
+
 	List<Product> getProducts(String pattern);
-	
+
 	Category getCategoryTree();
-	
+
 	Set<Product> getProductsByCategoryPath(List<String> categoryPath);
-	
+
 	List<Product> getTopProducts(int k);
-	
+
 	List<Product> getSimilarCheaperProduct(String productId);
-	
+
 	Boolean addNewReview(Review review);
-	
+
 	List<Customer> getTrolls(double border);
-	
+
 	List<Offer> getOffers(String productId);
 }

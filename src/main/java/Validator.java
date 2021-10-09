@@ -59,7 +59,7 @@ public class Validator {
 			return false;
 		}
 		// check stars
-		if (review.getStars() == null || review.getStars() <= 0.0 || review.getStars() >= 5.0) {
+		if (review.getStars() == null || review.getStars() < 0.0 || review.getStars() > 5.0) {
 			errorMessage = "Stars is invalid.";
 			return false;
 		}

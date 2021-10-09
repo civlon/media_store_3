@@ -6,6 +6,7 @@ import java.util.Set;
 import tables.Customer;
 import tables.Offer;
 import tables.Product;
+import tables.Review;
 
 public class EntityPrinter {
 
@@ -89,6 +90,22 @@ public class EntityPrinter {
 		for (Offer offer : offers) {
 			printOffer(offer);
 		}
+	}
+
+	public void printReview(Review review) {
+		if (review == null) {
+			System.out.println("Review nicht gefunden.");
+			return;
+		}
+		System.out.println();
+		System.out.println("Nutzername: " + review.getUsername());
+		System.out.println("Produktnummer: " + review.getProductNumber());
+		System.out.println("Sterne: " + review.getStars());
+		System.out.println("Zusammenfassung: " + review.getSummary());
+		System.out.println("Text: " + review.getReviewText());
+		System.out.println("Datum: " + review.getReviewDate());
+		System.out.println();
+
 	}
 
 }

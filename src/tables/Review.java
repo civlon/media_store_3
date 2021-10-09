@@ -21,7 +21,7 @@ public class Review {
 	@Column(name = "username")
 	@NotNull
 	private String username;
-	
+
 	@Id
 	@Column(name = "product_number")
 	@NotNull
@@ -42,16 +42,17 @@ public class Review {
 	@Column(name = "review_date")
 	@NotNull
 	private Date reviewDate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "username", insertable = false, updatable = false)
 	private Customer customer;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "product_number", insertable = false, updatable = false)
 	private Product product;
-	
-	public Review() {}
+
+	public Review() {
+	}
 
 	public Review(@NotNull String username, @NotNull String productNumber, @NotNull Short stars,
 			@NotNull String summary, @NotNull String reviewText, @NotNull Date reviewDate) {
@@ -127,7 +128,5 @@ public class Review {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	
 
 }
