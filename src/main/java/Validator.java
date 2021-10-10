@@ -14,91 +14,135 @@ public class Validator {
 
 	}
 
-	public Boolean isProductIdValid(String productId) {
-		if (productId.length() > 10 || productId.length() < 10) {
+	public boolean isProductIdValid(String productId) {
+		if (productId.length() != 10) {
 			errorMessage = "Die Produktnummer hat nicht die Länge 10";
 			return false;
 		}
 		return true;
 	}
 
-	public Boolean isPatternValid(String pattern) {
+	public boolean isPatternValid(String pattern) {
+		//TODO
+		//enthält nur % oder _ als Sonderzeichen
 		return true;
 	}
 
-	public Boolean isCategoryPathValid(String categoryPath) {
-		if (!categoryPath.contains("->")) {
-			errorMessage = "Der Pfad ist im falschem Format.";
-			return false;
-		}
+	public boolean isCategoryPathValid(String categoryPath) {
+//		if (!categoryPath.contains("->")) {
+//			errorMessage = "Der Pfad ist im falschem Format.";
+//			return false;
+//		}
 		return true;
 	}
 
-	public Boolean isProductBorderValid(int k) {
+	public boolean isProductBorderValid(int k) {
 		if (k < 0) {
-			errorMessage = "Die angegebene Grenze ist nicht erlaubt.";
+			errorMessage = "Die angegebene Grenze muss positiv sein.";
 			return false;
 		}
 		return true;
 	}
 
-	public Boolean isRatingBorderValid(Double averageRating) {
-		if (averageRating < 0 || averageRating > 5.0) {
-			errorMessage = "Das angegebene Rating ist nicht im Bereich von 0-5";
+	public boolean isRatingValid(double averageRating) {
+		if (averageRating < 1.0 || averageRating > 5.0) {
+			errorMessage = "Das angegebene Rating muss im Intervall [1; 5] liegen.";
 			return false;
 		}
 		return true;
 	}
 
-	public Boolean isReviewValid(Review review, Product product, Customer customer, Review checkReview) {
+	public boolean isReviewValid(Review review, Product product, Customer customer, Review checkReview) {
 
 		// check user name
-		if (review.getUsername() == null || review.getUsername().length() >= 30) {
-			errorMessage = "Der Nutzername ist invalid.";
+		if (review.getUsername() == null) {
+			errorMessage = "Der Nutzername wurde nicht gesetzt.";
 			return false;
 		}
+		
 		// check product number
 		if (review.getProductNumber() == null) {
-			errorMessage = "Die Produktnummer ist invalid.";
+			errorMessage = "Die Produktnummer wurde nicht gesetzt.";
 			return false;
 		}
+		
 		// check stars
-		if (review.getStars() == null || review.getStars() < 0.0 || review.getStars() > 5.0) {
-			errorMessage = "Die Sternenanzahl ist invalid.";
+		if (review.getStars() == null) {
+			errorMessage = "Die Sternenanzahl wurde nicht gesetzt.";
 			return false;
 		}
+		
 		// check summary
-		if (review.getSummary() == null || review.getSummary().length() >= 100) {
-			errorMessage = "Die Zusammenfassung ist invalid.";
+		if (review.getSummary() == null) {
+			errorMessage = "Die Zusammenfassung wurde nicht gesetzt.";
 			return false;
 		}
+		
 		// check review text
 		if (review.getReviewText() == null) {
-			errorMessage = "Der Rezensionstext ist invalid.";
+			errorMessage = "Der Rezensionstext wurde nicht gesetzt.";
 			return false;
 		}
+		
 		// check review date
-		if (review.getReviewDate() == null
-				|| review.getReviewDate().compareTo(new Date(System.currentTimeMillis())) > 0) {
-			errorMessage = "Das Rezensionsdatum ist invalid.";
+		if (review.getReviewDate() == null) {
+			errorMessage = "Das Rezensionsdatum wurde nicht gesetzt.";
 			return false;
 		}
+		
 		// check if customer exists
 		if (customer == null) {
 			errorMessage = "Der angegebene Kunde existiert nicht.";
 			return false;
 		}
+		
 		// check if product exists
 		if (product == null) {
 			errorMessage = "Das rezensierte Produkt existiert nicht.";
 			return false;
 		}
+		
 		// check if review from user for this product already exists
 		if (checkReview != null) {
 			errorMessage = "Es existiert bereits eine Rezension für dieses Produkt von dem angegebenen Kunden";
 			return false;
 		}
+		
+		if (!isProductIdValid(review.getProductNumber())
+				|| !isUsernameValid(review.getUsername())
+				|| !isRatingValid(review.getStars())
+				|| !isSummaryValid(review.getSummary())
+				|| !isDateValid(review.getReviewDate())) {
+			return false;
+		}
 
+		return true;
+	}
+	
+	private boolean isUsernameValid(String username) {
+		if (username.length() > 30) {
+			errorMessage = "Der Nutzername ist länger als die erlaubten 30 Zeichen.";
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private boolean isSummaryValid(String summary) {
+		if (summary.length() > 100) {
+			errorMessage = "Die Zusammenfassung ist länger als die erlaubten 100 Zeichen.";
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private boolean isDateValid(Date date) {
+		if (date.compareTo(new Date(System.currentTimeMillis())) > 0) {
+			errorMessage = "Das Rezensionsdatum darf nicht in der Zukunft liegen.";
+			return false;
+		}
+		
 		return true;
 	}
 

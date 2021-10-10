@@ -219,7 +219,7 @@ public class ConsoleApplication {
 	private static void getTrolls() {
 		double averageRating = callUpAverageRating();
 
-		if (averageRating == 0) {
+		if (averageRating == 0.0) {
 			return;
 		}
 
@@ -319,7 +319,7 @@ public class ConsoleApplication {
 			System.out.print(validator.getErrorMessage());
 			System.out.println();
 			System.out.println();
-			return (Integer) null;
+			return 0;
 		}
 
 		return k;
@@ -329,28 +329,47 @@ public class ConsoleApplication {
 		Validator validator = new Validator();
 
 		System.out.println();
-		System.out.println("Bitte geben sie die Reviewdaten ein: ");
-		System.out.println("Geben sie den Nutzernamen an: ");
+		System.out.println("Bitte geben Sie die Reviewdaten ein: ");
+		System.out.println();
+		
+		System.out.println("Geben Sie den Nutzernamen ein: ");
 		System.out.println();
 		String username = input.next();
-		System.out.println("Geben sie die Produkt Nummer an: ");
+		
+		System.out.println("Geben Sie die Produktnummer ein: ");
 		System.out.println();
 		String productNumber = input.next();
-		System.out.println("Geben sie die Sternanzahl an: ");
+		
+		System.out.println("Geben Sie die Sternanzahl ein: ");
 		System.out.println();
 		Short stars = input.nextShort();
 		// need to call nextLine because nextShort does not finish the line
 		input.nextLine();
-		System.out.println("Geben sie die Zusammenfassung an: ");
+		
+		System.out.println("Geben Sie die Zusammenfassung ein: ");
 		System.out.println();
 		String summary = input.nextLine();
-		System.out.println("Geben sie den Rezensionstext an: ");
+		
+		System.out.println("Geben Sie den Rezensionstext ein: ");
 		System.out.println();
 		String reviewText = input.nextLine();
-		System.out.println("Geben sie das Rezensionsdatum an (im Format yyyy-MM-dd): ");
-		System.out.println();
-		String reviewDateInput = input.nextLine();
-		Date reviewDate = java.sql.Date.valueOf(reviewDateInput);
+		
+		Date reviewDate = null;		
+		do {
+			System.out.println();
+			System.out.println("Geben Sie das Rezensionsdatum im Format yyyy-MM-dd ein: ");
+			System.out.println();
+			String reviewDateInput = input.nextLine();
+			
+			try {
+				reviewDate = java.sql.Date.valueOf(reviewDateInput);			
+			} catch (IllegalArgumentException illegalDate) {
+				System.out.println();
+				System.out.println("Bitte geben Sie das Rezensionsdatum im richtigen Format an!");
+				continue;
+			}
+			
+		} while (false);		
 
 		Review review = new Review(username, productNumber, stars, summary, reviewText, reviewDate);
 		Product product = databaseInterface.getProduct(productNumber);
@@ -375,11 +394,11 @@ public class ConsoleApplication {
 
 		double averageRating = input.nextDouble();
 
-		if (!validator.isRatingBorderValid(averageRating)) {
+		if (!validator.isRatingValid(averageRating)) {
 			System.out.print(validator.getErrorMessage());
 			System.out.println();
 			System.out.println();
-			return (Double) null;
+			return 0.0;
 		}
 
 		return averageRating;
