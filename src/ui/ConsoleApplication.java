@@ -2,6 +2,7 @@ package ui;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
@@ -40,6 +41,7 @@ public class ConsoleApplication {
 		do {
 			printMenue();
 			int desiredMenueOption = input.nextInt();
+			input.nextLine();
 
 			switch (desiredMenueOption) {
 			case 1:
@@ -85,6 +87,8 @@ public class ConsoleApplication {
 			}
 
 		} while (continueProgram);
+		
+		return;
 
 	}
 
@@ -130,13 +134,13 @@ public class ConsoleApplication {
 	}
 
 	private static void getProducts() {
-		String productIdPattern = callUpProductIdPattern();
+		String productTitlePattern = callUpProductTitlePattern();
 
-		if (productIdPattern == null) {
-			return;
+		if (productTitlePattern.length() == 0) {
+			productTitlePattern = null;
 		}
 
-		List<Product> products = databaseInterface.getProducts(productIdPattern);
+		List<Product> products = databaseInterface.getProducts(productTitlePattern);
 
 		if (products == null || products.size() == 0) {
 			System.out.println();
@@ -192,19 +196,25 @@ public class ConsoleApplication {
 		if (productID == null) {
 			return;
 		}
+		
+		if (databaseInterface.getProduct(productID) == null) {
+			System.out.println();
+			System.out.println("Zu der angegebenen Produktnummer existiert kein Produkt.");
+			return;
+		}
 
 		List<Product> similarCheaperProducts = databaseInterface.getSimilarCheaperProduct(productID);
 
 		if (similarCheaperProducts == null || similarCheaperProducts.size() == 0) {
 			System.out.println();
-			System.out.println("Für die angegebene Grenze wurde kein Produkt gefunden.");
+			System.out.println("Zu dem angegebenen Produkt existieren keine ähnlichen Produkte, die billiger sind.");
 		} else {
 			entityPrinter.printProductList(similarCheaperProducts);
 		}
 	}
 
 	private static void addNewReview() {
-		Review review = callUpRating();
+		Review review = callUpReview();
 
 		if (review == null) {
 			return;
@@ -239,6 +249,12 @@ public class ConsoleApplication {
 		if (productID == null) {
 			return;
 		}
+		
+		if (databaseInterface.getProduct(productID) == null) {
+			System.out.println();
+			System.out.println("Zu der angegebenen Produktnummer existiert kein Produkt.");
+			return;
+		}
 
 		List<Offer> offers = databaseInterface.getOffers(productID);
 
@@ -256,7 +272,7 @@ public class ConsoleApplication {
 		System.out.println();
 		System.out.print("Bitte geben Sie die Produkt-ID ein: ");
 
-		String productID = input.next();
+		String productID = input.nextLine();
 
 		if (!validator.isProductIdValid(productID)) {
 			System.out.print(validator.getErrorMessage());
@@ -268,20 +284,12 @@ public class ConsoleApplication {
 		return productID;
 	}
 
-	private static String callUpProductIdPattern() {
-		Validator validator = new Validator();
-
+	private static String callUpProductTitlePattern() {
+		
 		System.out.println();
 		System.out.print("Bitte geben Sie das Muster für die Produkt-ID ein: ");
 
-		String productIdPattern = input.next();
-
-		if (!validator.isPatternValid(productIdPattern)) {
-			System.out.print(validator.getErrorMessage());
-			System.out.println();
-			System.out.println();
-			return null;
-		}
+		String productIdPattern = input.nextLine();
 
 		return productIdPattern;
 	}
@@ -293,17 +301,20 @@ public class ConsoleApplication {
 		System.out.print(
 				"Bitte geben Sie den Kategoriepfad im Format Hauptkategorie->Unterkategorie->Zielkategorie ein: ");
 
-		String categoryPath = input.next();
+		String categoryPath = input.nextLine();
 
-		if (!validator.isCategoryPathValid(categoryPath)) {
-			System.out.print(validator.getErrorMessage());
-			System.out.println();
-			System.out.println();
-			return null;
+		List<String> categories = entityPrinter.splitCategoryPath(categoryPath);
+		
+		if (categories != null) {
+			for (String categoryName : categories) {
+				if (!validator.isCategoryNameValid(categoryName)) {
+					System.out.print(validator.getErrorMessage());
+					System.out.println();
+					return null;
+				}
+			}
 		}
-
-		List<String> categories = new ArrayList<String>();
-
+		
 		return categories;
 	}
 
@@ -314,6 +325,7 @@ public class ConsoleApplication {
 		System.out.print("Bitte geben sie einen Wert für k ein: ");
 
 		int k = input.nextInt();
+		input.nextLine();
 
 		if (!validator.isProductBorderValid(k)) {
 			System.out.print(validator.getErrorMessage());
@@ -325,7 +337,7 @@ public class ConsoleApplication {
 		return k;
 	}
 
-	private static Review callUpRating() {
+	private static Review callUpReview() {
 		Validator validator = new Validator();
 
 		System.out.println();
@@ -334,16 +346,15 @@ public class ConsoleApplication {
 		
 		System.out.println("Geben Sie den Nutzernamen ein: ");
 		System.out.println();
-		String username = input.next();
+		String username = input.nextLine();
 		
 		System.out.println("Geben Sie die Produktnummer ein: ");
 		System.out.println();
-		String productNumber = input.next();
+		String productNumber = input.nextLine();
 		
 		System.out.println("Geben Sie die Sternanzahl ein: ");
 		System.out.println();
 		Short stars = input.nextShort();
-		// need to call nextLine because nextShort does not finish the line
 		input.nextLine();
 		
 		System.out.println("Geben Sie die Zusammenfassung ein: ");
@@ -362,14 +373,14 @@ public class ConsoleApplication {
 			String reviewDateInput = input.nextLine();
 			
 			try {
-				reviewDate = java.sql.Date.valueOf(reviewDateInput);			
+				reviewDate = java.sql.Date.valueOf(reviewDateInput);
+				break;
 			} catch (IllegalArgumentException illegalDate) {
 				System.out.println();
 				System.out.println("Bitte geben Sie das Rezensionsdatum im richtigen Format an!");
-				continue;
 			}
 			
-		} while (false);		
+		} while (true);		
 
 		Review review = new Review(username, productNumber, stars, summary, reviewText, reviewDate);
 		Product product = databaseInterface.getProduct(productNumber);
@@ -393,6 +404,7 @@ public class ConsoleApplication {
 		System.out.print("Bitte geben sie die Durchschnittsbewertung ein: ");
 
 		double averageRating = input.nextDouble();
+		input.nextLine();
 
 		if (!validator.isRatingValid(averageRating)) {
 			System.out.print(validator.getErrorMessage());

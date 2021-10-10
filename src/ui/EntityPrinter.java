@@ -1,5 +1,6 @@
 package ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -106,6 +107,23 @@ public class EntityPrinter {
 		System.out.println("Datum: " + review.getReviewDate());
 		System.out.println();
 
+	}
+	
+	public List<String> splitCategoryPath(String categoryPath) {
+		
+		String[] splittedCategories = categoryPath.split("->");
+		
+		List<String> categories = new ArrayList<String>();
+		
+		for (int i = 0; i < splittedCategories.length; i++) {
+			categories.add(splittedCategories[i]);
+		}
+		
+		if (categories.size() == 0) {
+			return null;
+		} else {
+			return categories;
+		}
 	}
 
 }

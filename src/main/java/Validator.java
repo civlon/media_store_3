@@ -22,17 +22,12 @@ public class Validator {
 		return true;
 	}
 
-	public boolean isPatternValid(String pattern) {
-		//TODO
-		//enthält nur % oder _ als Sonderzeichen
-		return true;
-	}
-
-	public boolean isCategoryPathValid(String categoryPath) {
-//		if (!categoryPath.contains("->")) {
-//			errorMessage = "Der Pfad ist im falschem Format.";
-//			return false;
-//		}
+	public boolean isCategoryNameValid(String categoryName) {
+		if (categoryName.length() > 100) {
+			errorMessage = "Der Kategorienname ist länger als die erlaubten 100 Zeichen.";
+			return false;
+		}
+		
 		return true;
 	}
 
