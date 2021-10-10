@@ -17,7 +17,9 @@ import tables.Product;
 import tables.Review;
 
 public class DatabaseInterface implements IDatabaseInterface {
-
+	
+	private final static int maxResults = 50;
+	
 	public Session session;
 
 	@Override
@@ -58,11 +60,11 @@ public class DatabaseInterface implements IDatabaseInterface {
 		List<Product> products;
 
 		if (pattern == null) {
-			String queryString = "FROM Product LIMIT 50";
-			products = this.session.createQuery(queryString).getResultList();
+			String queryString = "FROM Product";
+			products = this.session.createQuery(queryString).setMaxResults(maxResults).getResultList();
 		} else {
-			String queryString = "FROM Product p WHERE p.title LIKE :pattern LIMIT 50";
-			products = this.session.createQuery(queryString).setParameter("pattern", pattern).getResultList();
+			String queryString = "FROM Product p WHERE p.title LIKE :pattern";
+			products = this.session.createQuery(queryString).setParameter("pattern", pattern).setMaxResults(maxResults).getResultList();
 		}
 
 		tx.commit();
