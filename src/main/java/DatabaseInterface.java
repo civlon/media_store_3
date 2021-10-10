@@ -58,10 +58,10 @@ public class DatabaseInterface implements IDatabaseInterface {
 		List<Product> products;
 
 		if (pattern == null) {
-			String queryString = "FROM Product";
+			String queryString = "FROM Product LIMIT 50";
 			products = this.session.createQuery(queryString).getResultList();
 		} else {
-			String queryString = "FROM Product p WHERE p.title like :pattern";
+			String queryString = "FROM Product p WHERE p.title LIKE :pattern LIMIT 50";
 			products = this.session.createQuery(queryString).setParameter("pattern", pattern).getResultList();
 		}
 
@@ -83,7 +83,8 @@ public class DatabaseInterface implements IDatabaseInterface {
 		Transaction tx = this.session.beginTransaction();
 		List<Category> mainCategories = this.session.createQuery(query).getResultList();
 		tx.commit();
-
+		
+		rootCategory.setName("Wurzelknoten");
 		rootCategory.setSubCategories(mainCategories);
 
 		return rootCategory;
