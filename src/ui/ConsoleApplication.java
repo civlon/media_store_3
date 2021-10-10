@@ -304,7 +304,7 @@ public class ConsoleApplication {
 	private static String callUpProductTitlePattern() {
 		
 		System.out.println();
-		System.out.print("Bitte geben Sie das Muster für die Produkt-ID ein: ");
+		System.out.print("Bitte geben Sie das Muster für den Produkttitel ein: ");
 
 		String productIdPattern = input.nextLine();
 
