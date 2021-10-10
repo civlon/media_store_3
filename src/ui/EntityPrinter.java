@@ -22,6 +22,7 @@ public class EntityPrinter {
 		System.out.println("Titel: " + product.getTitle());
 		System.out.println("Produktgruppe: " + product.getProductGroup());
 		System.out.println("Rating: " + product.getRating());
+		System.out.println("Verkaufsrang: " + product.getSalesRank());
 		System.out.println();
 	}
 

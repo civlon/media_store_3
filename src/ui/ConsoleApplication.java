@@ -2,6 +2,7 @@ package ui;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -40,8 +41,17 @@ public class ConsoleApplication {
 
 		do {
 			printMenue();
-			int desiredMenueOption = input.nextInt();
-			input.nextLine();
+			int desiredMenueOption = 0;
+			try {
+				desiredMenueOption = input.nextInt();				
+			} catch (InputMismatchException e) {
+				System.out.println();
+				System.out.println("Bitte geben Sie als Menü-Option eine Ganzzahl ein.");
+				System.out.println();
+				continue;
+			} finally {
+				input.nextLine();
+			}
 
 			switch (desiredMenueOption) {
 			case 1:
@@ -282,8 +292,8 @@ public class ConsoleApplication {
 		String productID = input.nextLine();
 
 		if (!validator.isProductIdValid(productID)) {
-			System.out.print(validator.getErrorMessage());
 			System.out.println();
+			System.out.print(validator.getErrorMessage());
 			System.out.println();
 			return null;
 		}
@@ -315,6 +325,7 @@ public class ConsoleApplication {
 		if (categories != null) {
 			for (String categoryName : categories) {
 				if (!validator.isCategoryNameValid(categoryName)) {
+					System.out.println();
 					System.out.print(validator.getErrorMessage());
 					System.out.println();
 					return null;
@@ -330,13 +341,23 @@ public class ConsoleApplication {
 
 		System.out.println();
 		System.out.print("Bitte geben sie einen Wert für k ein: ");
-
-		int k = input.nextInt();
-		input.nextLine();
+		
+		int k = 0;
+		
+		try {
+			k = input.nextInt();			
+		} catch (InputMismatchException e) {
+			System.out.println();
+			System.out.println("Bitte geben Sie eine Ganzzahl für k ein.");
+			return 0;
+		} finally {
+			input.nextLine();
+			System.out.println();
+		}
 
 		if (!validator.isProductBorderValid(k)) {
-			System.out.print(validator.getErrorMessage());
 			System.out.println();
+			System.out.print(validator.getErrorMessage());
 			System.out.println();
 			return 0;
 		}
@@ -359,10 +380,24 @@ public class ConsoleApplication {
 		String productNumber = input.nextLine();
 		System.out.println();
 		
-		System.out.print("Bitte geben Sie die Sternanzahl ein: ");
-		Short stars = input.nextShort();
-		input.nextLine();
-		System.out.println();
+		Short stars = 0;
+		do {			
+			System.out.print("Bitte geben Sie die Sternanzahl ein: ");
+			
+			try {				
+				stars = input.nextShort();
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println();
+				System.out.println("Bitte geben Sie eine Ganzzahl für k ein.");
+				System.out.println();
+				continue;
+			} finally {
+				input.nextLine();				
+				System.out.println();			
+			}
+			
+		} while (true);
 		
 		System.out.print("Bitte geben Sie die Zusammenfassung ein: ");
 		String summary = input.nextLine();
@@ -394,8 +429,8 @@ public class ConsoleApplication {
 		Review checkReview = databaseInterface.getReview(username, productNumber);
 
 		if (!validator.isReviewValid(review, product, customer, checkReview)) {
-			System.out.print(validator.getErrorMessage());
 			System.out.println();
+			System.out.print(validator.getErrorMessage());
 			System.out.println();
 			return null;
 		}
@@ -409,13 +444,21 @@ public class ConsoleApplication {
 		System.out.println();
 		System.out.print("Bitte geben Sie die Durchschnittsbewertung ein: ");
 
-		double averageRating = input.nextDouble();
-		input.nextLine();
-		System.out.println();
+		double averageRating = 0.0;
+		try {
+			averageRating = input.nextDouble();
+		} catch (InputMismatchException e) {
+			System.out.println();
+			System.out.println("Bitte geben Sie eine Gleitkommazahl für die Durchschnittsbewertung ein.");
+			return 0.0;			
+		} finally {
+			input.nextLine();
+			System.out.println();
+		}
 
 		if (!validator.isRatingValid(averageRating)) {
-			System.out.print(validator.getErrorMessage());
 			System.out.println();
+			System.out.print(validator.getErrorMessage());
 			System.out.println();
 			return 0.0;
 		}

@@ -85,6 +85,14 @@ public class Validator {
 			return false;
 		}
 		
+		if (!isProductIdValid(review.getProductNumber())
+				|| !isUsernameValid(review.getUsername())
+				|| !isRatingValid(review.getStars())
+				|| !isSummaryValid(review.getSummary())
+				|| !isDateValid(review.getReviewDate())) {
+			return false;
+		}
+		
 		// check if customer exists
 		if (customer == null) {
 			errorMessage = "Der angegebene Kunde existiert nicht.";
@@ -100,14 +108,6 @@ public class Validator {
 		// check if review from user for this product already exists
 		if (checkReview != null) {
 			errorMessage = "Es existiert bereits eine Rezension für dieses Produkt von dem angegebenen Kunden";
-			return false;
-		}
-		
-		if (!isProductIdValid(review.getProductNumber())
-				|| !isUsernameValid(review.getUsername())
-				|| !isRatingValid(review.getStars())
-				|| !isSummaryValid(review.getSummary())
-				|| !isDateValid(review.getReviewDate())) {
 			return false;
 		}
 
