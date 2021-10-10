@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import tables.Category;
 import tables.Customer;
 import tables.Offer;
 import tables.Product;
@@ -80,6 +81,16 @@ public class EntityPrinter {
 		System.out.println("Zustand: " + offer.getCondition());
 		System.out.println("Verfügbar: " + offer.getAvailability());
 		System.out.println("Preis: " + offer.getPrice());
+		System.out.println();
+	}
+	
+	public void printCategory(Category category) {
+		if (category == null) {
+			System.out.println("Keine Kategorie gefunden.");
+			return;
+		}
+		System.out.println();
+		System.out.println("Kategorienname: " + category.getName());
 		System.out.println();
 	}
 

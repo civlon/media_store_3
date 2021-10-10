@@ -152,8 +152,15 @@ public class ConsoleApplication {
 
 	private static void getCategoryTree() {
 		Category rootNode = databaseInterface.getCategoryTree();
-		// TODO
-		// Ausgabe ergänzen
+		
+		entityPrinter.printCategory(rootNode);
+		
+		System.out.println("Liste der Unterkategorien:");
+		
+		for (Category subCategory : rootNode.getSubCategories()) {
+			entityPrinter.printCategory(subCategory);
+		}
+		
 	}
 
 	private static void getProductsByCategoryPath() {
@@ -341,35 +348,33 @@ public class ConsoleApplication {
 		Validator validator = new Validator();
 
 		System.out.println();
-		System.out.println("Bitte geben Sie die Reviewdaten ein: ");
+		System.out.println("Bitte geben Sie die Reviewdaten ein.");
 		System.out.println();
 		
-		System.out.println("Geben Sie den Nutzernamen ein: ");
-		System.out.println();
+		System.out.print("Bitte geben Sie den Nutzernamen ein: ");
 		String username = input.nextLine();
-		
-		System.out.println("Geben Sie die Produktnummer ein: ");
 		System.out.println();
+		
+		System.out.print("Bitte geben Sie die Produktnummer ein: ");
 		String productNumber = input.nextLine();
-		
-		System.out.println("Geben Sie die Sternanzahl ein: ");
 		System.out.println();
+		
+		System.out.print("Bitte geben Sie die Sternanzahl ein: ");
 		Short stars = input.nextShort();
 		input.nextLine();
-		
-		System.out.println("Geben Sie die Zusammenfassung ein: ");
 		System.out.println();
+		
+		System.out.print("Bitte geben Sie die Zusammenfassung ein: ");
 		String summary = input.nextLine();
-		
-		System.out.println("Geben Sie den Rezensionstext ein: ");
 		System.out.println();
+		
+		System.out.print("Bitte geben Sie den Rezensionstext ein: ");
 		String reviewText = input.nextLine();
+		System.out.println();
 		
 		Date reviewDate = null;		
 		do {
-			System.out.println();
-			System.out.println("Geben Sie das Rezensionsdatum im Format yyyy-MM-dd ein: ");
-			System.out.println();
+			System.out.print("Bitte geben Sie das Rezensionsdatum im Format yyyy-MM-dd ein: ");
 			String reviewDateInput = input.nextLine();
 			
 			try {
@@ -378,6 +383,7 @@ public class ConsoleApplication {
 			} catch (IllegalArgumentException illegalDate) {
 				System.out.println();
 				System.out.println("Bitte geben Sie das Rezensionsdatum im richtigen Format an!");
+				System.out.println();
 			}
 			
 		} while (true);		
@@ -401,10 +407,11 @@ public class ConsoleApplication {
 		Validator validator = new Validator();
 
 		System.out.println();
-		System.out.print("Bitte geben sie die Durchschnittsbewertung ein: ");
+		System.out.print("Bitte geben Sie die Durchschnittsbewertung ein: ");
 
 		double averageRating = input.nextDouble();
 		input.nextLine();
+		System.out.println();
 
 		if (!validator.isRatingValid(averageRating)) {
 			System.out.print(validator.getErrorMessage());
